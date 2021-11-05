@@ -1,12 +1,20 @@
 import axios from "axios";
+import cookie from "js-cookie";
+import Router from "next/router";
 import baseUrl from "./baseUrl";
 import catchErrors from "./catchErrors";
-import Router from "next/router";
-import cookie from "js-cookie";
 
-export const registerUser = async (user, profilePicUrl, setError, setLoading) => {
+export const registerUser = async (
+  user,
+  profilePicUrl,
+  setError,
+  setLoading
+) => {
   try {
-    const res = await axios.post(`${baseUrl}/api/signup`, { user, profilePicUrl });
+    const res = await axios.post(`${baseUrl}/api/signup`, {
+      user,
+      profilePicUrl,
+    });
 
     setToken(res.data);
   } catch (error) {
@@ -38,14 +46,15 @@ export const redirectUser = (ctx, location) => {
   }
 };
 
-const setToken = token => {
+const setToken = (token) => {
   cookie.set("token", token);
+  console.log("This is from set token authUser");
   Router.push("/");
 };
 
-export const logoutUser = email => {
+export const logoutUser = (email) => {
   cookie.set("userEmail", email);
   cookie.remove("token");
   Router.push("/login");
-  Router.reload();
+  // Router.reload();
 };

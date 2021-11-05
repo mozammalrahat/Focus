@@ -1,22 +1,22 @@
+import { Router, useRouter } from "next/router";
+import nprogress from "nprogress";
 import React, { createRef } from "react";
-import HeadTags from "./HeadTags";
-import Navbar from "./Navbar";
 import {
   Container,
-  Visibility,
   Grid,
-  Sticky,
   Ref,
-  Divider,
-  Segment
+  Segment,
+  Sticky,
+  Visibility,
 } from "semantic-ui-react";
-import nprogress from "nprogress";
-import Router from "next/router";
-import SideMenu from "./SideMenu";
+import HeadTags from "./HeadTags";
+import Navbar from "./Navbar";
 import Search from "./Search";
+import SideMenu from "./SideMenu";
 
 function Layout({ children, user }) {
   const contextRef = createRef();
+  const router = useRouter();
 
   Router.onRouteChangeStart = () => nprogress.start();
   Router.onRouteChangeComplete = () => nprogress.done();
@@ -26,29 +26,38 @@ function Layout({ children, user }) {
     <>
       <HeadTags />
       {user ? (
-        <div style={{ marginLeft: "1rem", marginRight: "1rem" }}>
-          <Ref innerRef={contextRef}>
-            <Grid>
-              <Grid.Column floated="left" width={2}>
-                <Sticky context={contextRef}>
-                  <SideMenu user={user} />
-                </Sticky>
-              </Grid.Column>
+        router.pathname === "/" ? (
+          <>
+            {/* <Navbar /> */}
+            <Container text style={{ paddingTop: "1rem" }}>
+              {children}
+            </Container>
+          </>
+        ) : (
+          <div style={{ marginLeft: "1rem", marginRight: "1rem" }}>
+            <Ref innerRef={contextRef}>
+              <Grid>
+                <Grid.Column floated="left" width={2}>
+                  <Sticky context={contextRef}>
+                    <SideMenu user={user} />
+                  </Sticky>
+                </Grid.Column>
 
-              <Grid.Column width={10}>
-                <Visibility context={contextRef}>{children}</Visibility>
-              </Grid.Column>
+                <Grid.Column width={10}>
+                  <Visibility context={contextRef}>{children}</Visibility>
+                </Grid.Column>
 
-              <Grid.Column floated="left" width={4}>
-                <Sticky context={contextRef}>
-                  <Segment basic>
-                    <Search />
-                  </Segment>
-                </Sticky>
-              </Grid.Column>
-            </Grid>
-          </Ref>
-        </div>
+                <Grid.Column floated="left" width={4}>
+                  <Sticky context={contextRef}>
+                    <Segment basic>
+                      <Search />
+                    </Segment>
+                  </Sticky>
+                </Grid.Column>
+              </Grid>
+            </Ref>
+          </div>
+        )
       ) : (
         <>
           <Navbar />
