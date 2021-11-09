@@ -12,13 +12,14 @@ class MyApp extends App {
     const { token } = parseCookies(ctx);
     let pageProps = {};
 
-    const protectedRoutes = true;
-    // ctx.pathname === "studentshub" ||
-    // ctx.pathname === "/[username]" ||
-    // ctx.pathname === "/notifications" ||
-    // ctx.pathname === "/post/[postId]";
+    const protectedRoutes =
+      // ctx.pathname === "/" ||
+      ctx.pathname === "/studentshub" ||
+      ctx.pathname === "/[username]" ||
+      ctx.pathname === "/notifications" ||
+      ctx.pathname === "/post/[postId]";
     if (!token) {
-      protectedRoutes && redirectUser(ctx, "/login");
+      protectedRoutes && redirectUser(ctx, "/");
     }
     //
     else {
@@ -32,13 +33,19 @@ class MyApp extends App {
         });
 
         const { user, userFollowStats } = res.data;
-        if (user) !protectedRoutes && redirectUser(ctx, "/");
+        console.log("User is :", user);
+
+        if (user && ctx.pathname !== "/" && !protectedRoutes) {
+          redirectUser(ctx, "/");
+        }
+
+        // if (user) redirectUser(ctx, "/");
 
         pageProps.user = user;
         pageProps.userFollowStats = userFollowStats;
       } catch (error) {
         destroyCookie(ctx, "token");
-        redirectUser(ctx, "/login");
+        redirectUser(ctx, "/");
       }
     }
 

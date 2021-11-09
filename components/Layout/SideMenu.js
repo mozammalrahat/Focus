@@ -19,7 +19,7 @@ function SideMenu({
         verticalAlign="middle"
         selection
       >
-        <Link href="/">
+        <Link href="/studentshub">
           <List.Item active={isActive("/")}>
             <Icon name="home" size="large" color={isActive("/") && "teal"} />
             <List.Content>
@@ -29,7 +29,7 @@ function SideMenu({
         </Link>
         <br />
 
-        <Link href="/messages">
+        <Link href="#">
           <List.Item active={isActive("/messages")}>
             <Icon
               name={unreadMessage ? "hand point right" : "mail outline"}
