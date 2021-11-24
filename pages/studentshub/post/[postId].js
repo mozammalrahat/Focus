@@ -1,15 +1,22 @@
-import React, { useState } from "react";
 import axios from "axios";
-import { parseCookies } from "nookies";
-import { Card, Icon, Image, Divider, Segment, Container } from "semantic-ui-react";
-import PostComments from "../../components/Post/PostComments";
-import CommentInputField from "../../components/Post/CommentInputField";
-import LikesList from "../../components/Post/LikesList";
 import Link from "next/link";
-import { likePost } from "../../utils/postActions";
-import calculateTime from "../../utils/calculateTime";
-import baseUrl from "../../utils/baseUrl";
-import { NoPostFound } from "../../components/Layout/NoData";
+import { parseCookies } from "nookies";
+import React, { useState } from "react";
+import {
+  Card,
+  Container,
+  Divider,
+  Icon,
+  Image,
+  Segment,
+} from "semantic-ui-react";
+import { NoPostFound } from "../../../components/Layout/NoData";
+import CommentInputField from "../../../components/Post/CommentInputField";
+import LikesList from "../../../components/Post/LikesList";
+import PostComments from "../../../components/Post/PostComments";
+import baseUrl from "../../../utils/baseUrl";
+import calculateTime from "../../../utils/calculateTime";
+import { likePost } from "../../../utils/postActions";
 
 function PostPage({ post, errorLoading, user }) {
   if (errorLoading) {
@@ -19,7 +26,8 @@ function PostPage({ post, errorLoading, user }) {
   const [likes, setLikes] = useState(post.likes);
 
   const isLiked =
-    likes.length > 0 && likes.filter(like => like.user === user._id).length > 0;
+    likes.length > 0 &&
+    likes.filter((like) => like.user === user._id).length > 0;
 
   const [comments, setComments] = useState(post.comments);
 
@@ -40,7 +48,12 @@ function PostPage({ post, errorLoading, user }) {
           )}
 
           <Card.Content>
-            <Image floated="left" src={post.user.profilePicUrl} avatar circular />
+            <Image
+              floated="left"
+              src={post.user.profilePicUrl}
+              avatar
+              circular
+            />
             <Card.Header>
               <Link href={`/${post.user.username}`}>
                 <a>{post.user.name}</a>
@@ -55,7 +68,7 @@ function PostPage({ post, errorLoading, user }) {
               style={{
                 fontSize: "17px",
                 letterSpacing: "0.1px",
-                wordSpacing: "0.35px"
+                wordSpacing: "0.35px",
               }}
             >
               {post.text}
@@ -83,10 +96,14 @@ function PostPage({ post, errorLoading, user }) {
               }
             />
 
-            <Icon name="comment outline" style={{ marginLeft: "7px" }} color="blue" />
+            <Icon
+              name="comment outline"
+              style={{ marginLeft: "7px" }}
+              color="blue"
+            />
 
             {comments.length > 0 &&
-              comments.map(comment => (
+              comments.map((comment) => (
                 <PostComments
                   key={comment._id}
                   comment={comment}
@@ -98,7 +115,11 @@ function PostPage({ post, errorLoading, user }) {
 
             <Divider hidden />
 
-            <CommentInputField user={user} postId={post._id} setComments={setComments} />
+            <CommentInputField
+              user={user}
+              postId={post._id}
+              setComments={setComments}
+            />
           </Card.Content>
         </Card>
       </Segment>
@@ -107,13 +128,13 @@ function PostPage({ post, errorLoading, user }) {
   );
 }
 
-PostPage.getInitialProps = async ctx => {
+PostPage.getInitialProps = async (ctx) => {
   try {
     const { postId } = ctx.query;
     const { token } = parseCookies(ctx);
 
     const res = await axios.get(`${baseUrl}/api/posts/${postId}`, {
-      headers: { Authorization: token }
+      headers: { Authorization: token },
     });
 
     return { post: res.data };

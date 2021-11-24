@@ -35,7 +35,8 @@ function SideMenu({
               name={unreadMessage ? "hand point right" : "mail outline"}
               size="large"
               color={
-                (isActive("/messages") && "teal") || (unreadMessage && "orange")
+                (isActive("/studentshub/messages") && "teal") ||
+                (unreadMessage && "orange")
               }
             />
             <List.Content>
@@ -45,7 +46,7 @@ function SideMenu({
         </Link>
         <br />
 
-        <Link href="/notifications">
+        <Link href="/studentshub/notifications">
           <List.Item active={isActive("/notifications")}>
             <Icon
               name={unreadNotification ? "hand point right" : "bell outline"}
@@ -62,7 +63,7 @@ function SideMenu({
         </Link>
         <br />
 
-        <Link href={`/${username}`}>
+        <Link href={`/studentshub/${username}`}>
           <List.Item active={router.query.username === username}>
             <Icon
               name="user"

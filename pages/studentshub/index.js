@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
-import baseUrl from "../utils/baseUrl";
-import CreatePost from "../components/Post/CreatePost";
-import CardPost from "../components/Post/CardPost";
-import { Segment } from "semantic-ui-react";
-import { parseCookies } from "nookies";
-import { NoPosts } from "../components/Layout/NoData";
-import { PostDeleteToastr } from "../components/Layout/Toastr";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { PlaceHolderPosts, EndMessage } from "../components/Layout/PlaceHolderGroup";
 import cookie from "js-cookie";
+import { parseCookies } from "nookies";
+import React, { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { Segment } from "semantic-ui-react";
+import { NoPosts } from "../../components/Layout/NoData";
+import {
+  EndMessage,
+  PlaceHolderPosts,
+} from "../../components/Layout/PlaceHolderGroup";
+import { PostDeleteToastr } from "../../components/Layout/Toastr";
+import CardPost from "../../components/Post/CardPost";
+import CreatePost from "../../components/Post/CreatePost";
+import baseUrl from "../../utils/baseUrl";
 
 function Index({ user, postsData, errorLoading }) {
-  const [posts, setPosts] = useState(postsData||[]);
+  const [posts, setPosts] = useState(postsData || []);
   const [showToastr, setShowToastr] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
@@ -30,13 +33,13 @@ function Index({ user, postsData, errorLoading }) {
     try {
       const res = await axios.get(`${baseUrl}/api/posts`, {
         headers: { Authorization: cookie.get("token") },
-        params: { pageNumber }
+        params: { pageNumber },
       });
 
       if (res.data.length === 0) setHasMore(false);
 
-      setPosts(prev => [...prev, ...res.data]);
-      setPageNumber(prev => prev + 1);
+      setPosts((prev) => [...prev, ...res.data]);
+      setPageNumber((prev) => prev + 1);
     } catch (error) {
       alert("Error fetching Posts");
     }
@@ -55,8 +58,9 @@ function Index({ user, postsData, errorLoading }) {
           next={fetchDataOnScroll}
           loader={<PlaceHolderPosts />}
           endMessage={<EndMessage />}
-          dataLength={posts.length}>
-          {posts.map(post => (
+          dataLength={posts.length}
+        >
+          {posts.map((post) => (
             <CardPost
               key={post._id}
               post={post}
@@ -71,13 +75,13 @@ function Index({ user, postsData, errorLoading }) {
   );
 }
 
-Index.getInitialProps = async ctx => {
+Index.getInitialProps = async (ctx) => {
   try {
     const { token } = parseCookies(ctx);
 
     const res = await axios.get(`${baseUrl}/api/posts`, {
       headers: { Authorization: token },
-      params: { pageNumber: 1 }
+      params: { pageNumber: 1 },
     });
 
     return { postsData: res.data };

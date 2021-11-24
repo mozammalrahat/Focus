@@ -15,9 +15,12 @@ class MyApp extends App {
     const protectedRoutes =
       // ctx.pathname === "/" ||
       ctx.pathname === "/studentshub" ||
-      ctx.pathname === "/[username]" ||
-      ctx.pathname === "/notifications" ||
-      ctx.pathname === "/post/[postId]";
+      ctx.pathname === "/studentshub/[username]" ||
+      ctx.pathname === "/studentshub/notifications" ||
+      ctx.pathname === "/studentshub/post/[postId]";
+
+    console.log("Path name is :");
+    console.log(ctx.pathname);
     if (!token) {
       protectedRoutes && redirectUser(ctx, "/");
     }
@@ -36,6 +39,7 @@ class MyApp extends App {
         console.log("User is :", user);
 
         if (user && ctx.pathname !== "/" && !protectedRoutes) {
+          console.log("this is from _app.js");
           redirectUser(ctx, "/");
         }
 

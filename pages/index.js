@@ -7,6 +7,7 @@ function Home() {
   const handleLink = () => {
     if (cookie.get("token")) {
       Router.push("/studentshub");
+      console.log("redirecting to Students Hub");
     } else {
       Router.push("/login");
     }

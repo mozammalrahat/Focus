@@ -1,5 +1,5 @@
 import React from "react";
-import { Feed, Divider } from "semantic-ui-react";
+import { Divider, Feed } from "semantic-ui-react";
 import calculateTime from "../../utils/calculateTime";
 
 function LikeNotification({ notification }) {

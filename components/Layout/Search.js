@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { List, Image, Search } from "semantic-ui-react";
 import axios from "axios";
 import cookie from "js-cookie";
 import Router from "next/router";
+import React, { useState } from "react";
+import { Image, List, Search } from "semantic-ui-react";
 import baseUrl from "../../utils/baseUrl";
 let cancel;
 
@@ -11,7 +11,7 @@ function SearchComponent() {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
 
-  const handleChange = async e => {
+  const handleChange = async (e) => {
     const { value } = e.target;
     setText(value);
     setLoading(true);
@@ -23,9 +23,9 @@ function SearchComponent() {
 
       const res = await axios.get(`${baseUrl}/api/search/${value}`, {
         headers: { Authorization: token },
-        cancelToken: new CancelToken(canceler => {
+        cancelToken: new CancelToken((canceler) => {
           cancel = canceler;
-        })
+        }),
       });
 
       if (res.data.length === 0) return setLoading(false);
@@ -51,7 +51,9 @@ function SearchComponent() {
       results={results}
       onSearchChange={handleChange}
       minCharacters={1}
-      onResultSelect={(e, data) => Router.push(`/${data.result.username}`)}
+      onResultSelect={(e, data) =>
+        Router.push(`studentshub/${data.result.username}`)
+      }
     />
   );
 }
