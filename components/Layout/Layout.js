@@ -28,7 +28,6 @@ function Layout({ children, user }) {
       {user ? (
         router.pathname === "/" ? (
           <>
-            {/* <Navbar /> */}
             <Container text style={{ paddingTop: "1rem" }}>
               {children}
             </Container>

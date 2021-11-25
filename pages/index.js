@@ -4,14 +4,15 @@ import React from "react";
 import { Grid, Icon } from "semantic-ui-react";
 
 function Home() {
-  const handleLink = () => {
+  const handleLink = (path) => {
     if (cookie.get("token")) {
-      Router.push("/studentshub");
+      Router.push(path);
       console.log("redirecting to Students Hub");
     } else {
       Router.push("/login");
     }
   };
+
   return (
     <>
       <Grid
@@ -29,11 +30,12 @@ function Home() {
               size="massive"
               color="blue"
               style={{ cursor: "pointer" }}
+              onClick={() => handleLink("qa/")}
             />
           </Grid.Column>
 
           <Grid.Column width={8} textAlign="center" verticalAlign="middle">
-            <h1>Q&A Section</h1>
+            <h1>Job Resources & QA Section</h1>
           </Grid.Column>
         </Grid.Row>
 
@@ -48,7 +50,7 @@ function Home() {
               size="massive"
               color="blue"
               style={{ cursor: "pointer" }}
-              onClick={handleLink}
+              onClick={() => handleLink("studentshub/")}
             />
           </Grid.Column>
         </Grid.Row>

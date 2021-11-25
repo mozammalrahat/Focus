@@ -35,13 +35,14 @@ router.post("/", async (req, res) => {
   const {
     name,
     email,
+    registrationNumber,
     username,
     password,
     bio,
     facebook,
     youtube,
     twitter,
-    instagram
+    instagram,
   } = req.body.user;
 
   if (!isEmail(email)) return res.status(401).send("Invalid Email");
@@ -60,9 +61,10 @@ router.post("/", async (req, res) => {
     user = new UserModel({
       name,
       email: email.toLowerCase(),
+      registrationNumber,
       username: username.toLowerCase(),
       password,
-      profilePicUrl: req.body.profilePicUrl || userPng
+      profilePicUrl: req.body.profilePicUrl || userPng,
     });
 
     user.password = await bcrypt.hash(password, 10);
@@ -80,14 +82,23 @@ router.post("/", async (req, res) => {
     if (twitter) profileFields.social.twitter = twitter;
 
     await new ProfileModel(profileFields).save();
-    await new FollowerModel({ user: user._id, followers: [], following: [] }).save();
+    await new FollowerModel({
+      user: user._id,
+      followers: [],
+      following: [],
+    }).save();
     await new NotificationModel({ user: user._id, notifications: [] }).save();
 
     const payload = { userId: user._id };
-    jwt.sign(payload, process.env.jwtSecret, { expiresIn: "2d" }, (err, token) => {
-      if (err) throw err;
-      res.status(200).json(token);
-    });
+    jwt.sign(
+      payload,
+      process.env.jwtSecret,
+      { expiresIn: "2d" },
+      (err, token) => {
+        if (err) throw err;
+        res.status(200).json(token);
+      }
+    );
   } catch (error) {
     console.error(error);
     return res.status(500).send(`Server error`);

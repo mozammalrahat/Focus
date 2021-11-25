@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
-import { Form, Button, Image, Divider, Message, Icon } from "semantic-ui-react";
-import uploadPic from "../../utils/uploadPicToCloudinary";
+import React, { useRef, useState } from "react";
+import { Button, Divider, Form, Icon, Image, Message } from "semantic-ui-react";
 import { submitNewPost } from "../../utils/postActions";
+import uploadPic from "../../utils/uploadPicToCloudinary";
 
-function CreatePost({ user, setPosts }) {
+function CreatePost({ user, setPosts, placeholder }) {
   const [newPost, setNewPost] = useState({ text: "", location: "" });
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
@@ -14,7 +14,7 @@ function CreatePost({ user, setPosts }) {
   const [media, setMedia] = useState(null);
   const [mediaPreview, setMediaPreview] = useState(null);
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const { name, value, files } = e.target;
 
     if (name === "media") {
@@ -22,7 +22,7 @@ function CreatePost({ user, setPosts }) {
       setMediaPreview(URL.createObjectURL(files[0]));
     }
 
-    setNewPost(prev => ({ ...prev, [name]: value }));
+    setNewPost((prev) => ({ ...prev, [name]: value }));
   };
 
   const addStyles = () => ({
@@ -32,10 +32,10 @@ function CreatePost({ user, setPosts }) {
     border: "dotted",
     paddingTop: media === null && "60px",
     cursor: "pointer",
-    borderColor: highlighted ? "green" : "black"
+    borderColor: highlighted ? "green" : "black",
   });
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     let picUrl;
@@ -75,7 +75,7 @@ function CreatePost({ user, setPosts }) {
         <Form.Group>
           <Image src={user.profilePicUrl} circular avatar inline />
           <Form.TextArea
-            placeholder="Whats Happening"
+            placeholder={placeholder}
             name="text"
             value={newPost.text}
             onChange={handleChange}
@@ -107,15 +107,15 @@ function CreatePost({ user, setPosts }) {
         <div
           onClick={() => inputRef.current.click()}
           style={addStyles()}
-          onDrag={e => {
+          onDrag={(e) => {
             e.preventDefault();
             setHighlighted(true);
           }}
-          onDragLeave={e => {
+          onDragLeave={(e) => {
             e.preventDefault();
             setHighlighted(false);
           }}
-          onDrop={e => {
+          onDrop={(e) => {
             e.preventDefault();
             setHighlighted(true);
 
@@ -123,7 +123,8 @@ function CreatePost({ user, setPosts }) {
 
             setMedia(droppedFile[0]);
             setMediaPreview(URL.createObjectURL(droppedFile[0]));
-          }}>
+          }}
+        >
           {media === null ? (
             <Icon name="plus" size="big" />
           ) : (

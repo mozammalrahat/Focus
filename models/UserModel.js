@@ -7,6 +7,8 @@ const UserSchema = new Schema(
 
     email: { type: String, required: true, unique: true },
 
+    registrationNumber: { type: String, required: false, unique: true },
+
     password: { type: String, required: true, select: false },
 
     username: { type: String, required: true, unique: true, trim: true },
@@ -23,7 +25,7 @@ const UserSchema = new Schema(
 
     resetToken: { type: String },
 
-    expireToken: { type: Date }
+    expireToken: { type: Date },
   },
   { timestamps: true }
 );
