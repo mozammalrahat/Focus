@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import {
   Button,
@@ -12,6 +13,11 @@ import {
   Segment,
 } from "semantic-ui-react";
 import calculateTime from "../../utils/calculateTime";
+import { deletePost, likePost } from "../../utils/postActions";
+import {
+  deleteComment as deleteQuestion,
+  likePost as likeQuestion,
+} from "../../utils/qaActions";
 import CommentInputField from "./CommentInputField";
 import ImageModal from "./ImageModal";
 import LikesList from "./LikesList";
@@ -40,6 +46,8 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
     comments,
     setComments,
   });
+  const router = useRouter();
+  const pathString = router.pathname.slice(0, 3);
 
   return (
     <>
@@ -104,7 +112,9 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
                     icon="trash"
                     content="Delete"
                     onClick={() =>
-                      deletePost(post._id, setPosts, setShowToastr)
+                      pathString === "/qa"
+                        ? deleteQuestion(post._id, setPosts, setShowToastr)
+                        : deletePost(post._id, setPosts, setShowToastr)
                     }
                   />
                 </Popup>
@@ -134,11 +144,32 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
 
           <Card.Content extra>
             <Icon
-              name={isLiked ? "heart" : "heart outline"}
-              color="red"
+              name={
+                pathString === "/qa"
+                  ? isLiked
+                    ? "hand paper"
+                    : "hand paper outline"
+                  : isLiked
+                  ? "heart"
+                  : "heart outline"
+              }
+              color="green"
+              size="large"
               style={{ cursor: "pointer" }}
               onClick={() =>
-                likePost(post._id, user._id, setLikes, isLiked ? false : true)
+                pathString === "/qa"
+                  ? likeQuestion(
+                      post._id,
+                      user._id,
+                      setLikes,
+                      isLiked ? false : true
+                    )
+                  : likePost(
+                      post._id,
+                      user._id,
+                      setLikes,
+                      isLiked ? false : true
+                    )
               }
             />
 
@@ -147,7 +178,16 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
               trigger={
                 likes.length > 0 && (
                   <span className="spanLikesList">
-                    {`${likes.length} ${likes.length === 1 ? "like" : "likes"}`}
+                    {`${likes.length}
+                    ${
+                      pathString === "/qa"
+                        ? likes.length === 1
+                          ? "vote"
+                          : "votes"
+                        : likes.length === 1
+                        ? "like"
+                        : "likes"
+                    }`}
                   </span>
                 )
               }
@@ -157,6 +197,7 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
               name="comment outline"
               style={{ marginLeft: "7px" }}
               color="blue"
+              size="large"
             />
 
             {comments.length > 0 &&

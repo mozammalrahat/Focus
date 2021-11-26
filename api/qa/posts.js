@@ -31,7 +31,6 @@ router.post("/", authMiddleware, async (req, res) => {
     const post = await new PostModel(newPost).save();
 
     const postCreated = await PostModel.findById(post._id).populate("user");
-
     return res.json(postCreated);
   } catch (error) {
     console.error(error);
@@ -275,18 +274,21 @@ router.post("/comment/:postId", authMiddleware, async (req, res) => {
       date: Date.now(),
     };
 
-    await post.answers.unshift(newComment);
+    await post.comments.unshift(newComment);
     await post.save();
 
-    if (post.user.toString() !== userId) {
-      await newNotification(
-        postId,
-        newAnswer._id,
-        userId,
-        post.user.toString(),
-        text
-      );
-    }
+    // if (post.user.toString() !== userId) {
+    //   await newNotification(
+    //     postId,
+    //     newComment._id,
+    //     userId,
+    //     post.user.toString(),
+    //     text
+    //   );
+    // }
+
+    console.log("New Comment");
+    console.log(newComment._id);
 
     return res.status(200).json(newComment._id);
   } catch (error) {

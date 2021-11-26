@@ -1,9 +1,12 @@
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { Comment, Icon } from "semantic-ui-react";
 import calculateTime from "../../utils/calculateTime";
-import { deleteComment } from "../../utils/postActions";
+import { deleteComment as deleteAnswer } from "../../utils/qaActions";
 
 function PostComments({ comment, user, setComments, postId }) {
+  const router = useRouter();
+  const pathString = router.pathname.slice(0, 3);
   const [disabled, setDisabled] = useState(false);
 
   return (
@@ -28,7 +31,9 @@ function PostComments({ comment, user, setComments, postId }) {
                     name="trash"
                     onClick={async () => {
                       setDisabled(true);
-                      await deleteComment(postId, comment._id, setComments);
+                      pathString === "/qa"
+                        ? await deleteAnswer(postId, comment._id, setComments)
+                        : await deletePost(postId, comment._id, setComments);
                       setDisabled(false);
                     }}
                   />
