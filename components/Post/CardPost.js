@@ -12,7 +12,6 @@ import {
   Segment,
 } from "semantic-ui-react";
 import calculateTime from "../../utils/calculateTime";
-import { deletePost, likePost } from "../../utils/postActions";
 import CommentInputField from "./CommentInputField";
 import ImageModal from "./ImageModal";
 import LikesList from "./LikesList";
@@ -120,7 +119,7 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
 
             <Card.Meta>{calculateTime(post.createdAt)}</Card.Meta>
 
-            {post.location && <Card.Meta content={post.location} />}
+            {post.topic && <Card.Meta content={post.topic} />}
 
             <Card.Description
               style={{

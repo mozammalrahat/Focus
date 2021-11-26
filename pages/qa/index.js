@@ -31,7 +31,7 @@ function Index({ user, postsData, errorLoading }) {
 
   const fetchDataOnScroll = async () => {
     try {
-      const res = await axios.get(`${baseUrl}/api/posts`, {
+      const res = await axios.get(`${baseUrl}/api/qa/posts`, {
         headers: { Authorization: cookie.get("token") },
         params: { pageNumber },
       });
@@ -52,7 +52,8 @@ function Index({ user, postsData, errorLoading }) {
       {showToastr && <PostDeleteToastr />}
       <Segment>
         <CreatePost
-          placeholder="Ask a Question?"
+          placeholder1="Ask a Question?"
+          placeholder2="Topic!"
           user={user}
           setPosts={setPosts}
         />
@@ -83,7 +84,7 @@ Index.getInitialProps = async (ctx) => {
   try {
     const { token } = parseCookies(ctx);
 
-    const res = await axios.get(`${baseUrl}/api/posts`, {
+    const res = await axios.get(`${baseUrl}/api/qa/posts`, {
       headers: { Authorization: token },
       params: { pageNumber: 1 },
     });

@@ -3,7 +3,7 @@ import { Button, Divider, Form, Icon, Image, Message } from "semantic-ui-react";
 import { submitNewPost } from "../../utils/postActions";
 import uploadPic from "../../utils/uploadPicToCloudinary";
 
-function CreatePost({ user, setPosts, placeholder }) {
+function CreatePost({ user, setPosts, placeholder1, placeholder2 }) {
   const [newPost, setNewPost] = useState({ text: "", location: "" });
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
@@ -75,7 +75,7 @@ function CreatePost({ user, setPosts, placeholder }) {
         <Form.Group>
           <Image src={user.profilePicUrl} circular avatar inline />
           <Form.TextArea
-            placeholder={placeholder}
+            placeholder={placeholder1}
             name="text"
             value={newPost.text}
             onChange={handleChange}
@@ -89,9 +89,9 @@ function CreatePost({ user, setPosts, placeholder }) {
             value={newPost.location}
             name="location"
             onChange={handleChange}
-            label="Add Location"
-            icon="map marker alternate"
-            placeholder="Want to add Location?"
+            label="Add Topic"
+            icon="clipboard outline"
+            placeholder={placeholder2}
           />
 
           <input

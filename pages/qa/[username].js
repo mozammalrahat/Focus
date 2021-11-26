@@ -46,7 +46,7 @@ function ProfilePage({
       try {
         const { username } = router.query;
         const res = await axios.get(
-          `${baseUrl}/api/profile/posts/${username}`,
+          `${baseUrl}/qa/api/profile/posts/${username}`,
           {
             headers: { Authorization: cookie.get("token") },
           }

@@ -105,6 +105,8 @@ function ProfilePage({
                       user={user}
                       setPosts={setPosts}
                       setShowToastr={setShowToastr}
+                      // likesList={post.likes}
+                      // commentsList={post.comments}
                     />
                   ))
                 ) : (

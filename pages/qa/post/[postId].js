@@ -16,20 +16,19 @@ import LikesList from "../../../components/Post/LikesList";
 import PostComments from "../../../components/Post/PostComments";
 import baseUrl from "../../../utils/baseUrl";
 import calculateTime from "../../../utils/calculateTime";
-import { likePost } from "../../../utils/postActions";
 
 function PostPage({ post, errorLoading, user }) {
   if (errorLoading) {
     return <NoPostFound />;
   }
 
-  const [likes, setLikes] = useState(post.likes);
+  const [votes, setVotes] = useState(post.votes);
 
-  const isLiked =
-    likes.length > 0 &&
-    likes.filter((like) => like.user === user._id).length > 0;
+  const isVoted =
+    votes.length > 0 &&
+    votes.filter((vote) => vote.user === user._id).length > 0;
 
-  const [comments, setComments] = useState(post.comments);
+  const [answers, setAnswers] = useState(post.answers);
 
   return (
     <Container text>
@@ -62,7 +61,7 @@ function PostPage({ post, errorLoading, user }) {
 
             <Card.Meta>{calculateTime(post.createdAt)}</Card.Meta>
 
-            {post.location && <Card.Meta content={post.location} />}
+            {post.topic && <Card.Meta content={post.topic} />}
 
             <Card.Description
               style={{
@@ -77,20 +76,20 @@ function PostPage({ post, errorLoading, user }) {
 
           <Card.Content extra>
             <Icon
-              name={isLiked ? "heart" : "heart outline"}
+              name={isVoted ? "heart" : "heart outline"}
               color="red"
               style={{ cursor: "pointer" }}
-              onClick={() =>
-                likePost(post._id, user._id, setLikes, isLiked ? false : true)
-              }
+              // onClick={() =>
+              //   likePost(post._id, user._id, setVotes, isVoted ? false : true)
+              // }
             />
 
             <LikesList
               postId={post._id}
               trigger={
-                likes.length > 0 && (
+                votes.length > 0 && (
                   <span className="spanLikesList">
-                    {`${likes.length} ${likes.length === 1 ? "like" : "likes"}`}
+                    {`${votes.length} ${votes.length === 1 ? "like" : "likes"}`}
                   </span>
                 )
               }
@@ -102,14 +101,14 @@ function PostPage({ post, errorLoading, user }) {
               color="blue"
             />
 
-            {comments.length > 0 &&
-              comments.map((comment) => (
+            {answers.length > 0 &&
+              answers.map((comment) => (
                 <PostComments
                   key={comment._id}
                   comment={comment}
                   postId={post._id}
                   user={user}
-                  setComments={setComments}
+                  setComments={setAnswers}
                 />
               ))}
 
@@ -118,7 +117,7 @@ function PostPage({ post, errorLoading, user }) {
             <CommentInputField
               user={user}
               postId={post._id}
-              setComments={setComments}
+              setComments={setAnswers}
             />
           </Card.Content>
         </Card>
@@ -133,7 +132,7 @@ PostPage.getInitialProps = async (ctx) => {
     const { postId } = ctx.query;
     const { token } = parseCookies(ctx);
 
-    const res = await axios.get(`${baseUrl}/api/posts/${postId}`, {
+    const res = await axios.get(`${baseUrl}/api/qa/posts/${postId}`, {
       headers: { Authorization: token },
     });
 
