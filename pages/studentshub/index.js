@@ -45,7 +45,17 @@ function Index({ user, postsData, errorLoading }) {
     }
   };
 
-  if (posts.length === 0 || errorLoading) return <NoPosts />;
+  if (posts.length === 0 || errorLoading)
+    return (
+      <>
+        <NoPosts />
+        <CreatePost
+          placeholder="Ask a Question?"
+          user={user}
+          setPosts={setPosts}
+        />
+      </>
+    );
 
   return (
     <>

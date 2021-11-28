@@ -45,7 +45,13 @@ function Index({ user, postsData, errorLoading }) {
     }
   };
 
-  if (posts.length === 0 || errorLoading) return <NoPosts />;
+  if (posts.length === 0 || errorLoading)
+    return (
+      <>
+        <CreatePost user={user} setPosts={setPosts} />
+        <NoPosts />
+      </>
+    );
 
   console.log(posts);
 

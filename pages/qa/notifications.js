@@ -3,11 +3,10 @@ import cookie from "js-cookie";
 import { parseCookies } from "nookies";
 import React, { useEffect, useState } from "react";
 import { Container, Divider, Feed, Segment } from "semantic-ui-react";
-import LikeNotification from "../../components/Notifications/LikeNotification";
-import baseUrl from "../../utils/baseUrl";
 import { NoNotifications } from "../../components/Layout/NoData";
 import CommentNotification from "../../components/Notifications/CommentNotification";
-import FollowerNotification from "../../components/Notifications/FollowerNotification";
+import LikeNotification from "../../components/Notifications/LikeNotification";
+import baseUrl from "../../utils/baseUrl";
 
 function Notifications({ notifications, errorLoading, user, userFollowStats }) {
   const [loggedUserFollowStats, setUserFollowStats] = useState(userFollowStats);
@@ -45,7 +44,7 @@ function Notifications({ notifications, errorLoading, user, userFollowStats }) {
               <Feed size="small">
                 {notifications.map((notification) => (
                   <>
-                    {notification.type === "newLike" &&
+                    {notification.type === "newVote" &&
                       notification.post !== null && (
                         <LikeNotification
                           key={notification._id}
@@ -53,7 +52,7 @@ function Notifications({ notifications, errorLoading, user, userFollowStats }) {
                         />
                       )}
 
-                    {notification.type === "newComment" &&
+                    {notification.type === "newAnswer" &&
                       notification.post !== null && (
                         <CommentNotification
                           key={notification._id}
@@ -61,14 +60,14 @@ function Notifications({ notifications, errorLoading, user, userFollowStats }) {
                         />
                       )}
 
-                    {notification.type === "newFollower" && (
+                    {/* {notification.type === "newFollower" && (
                       <FollowerNotification
                         key={notification._id}
                         notification={notification}
                         loggedUserFollowStats={loggedUserFollowStats}
                         setUserFollowStats={setUserFollowStats}
                       />
-                    )}
+                    )} */}
                   </>
                 ))}
               </Feed>
@@ -87,10 +86,11 @@ Notifications.getInitialProps = async (ctx) => {
   try {
     const { token } = parseCookies(ctx);
 
-    const res = await axios.get(`${baseUrl}/api/notifications`, {
+    const res = await axios.get(`${baseUrl}/api/qa/qanotifications`, {
       headers: { Authorization: token },
     });
-
+    console.log("Notification Lists");
+    console.log(res.data);
     return { notifications: res.data };
   } catch (error) {
     return { errorLoading: true };
