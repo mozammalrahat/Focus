@@ -20,6 +20,8 @@ nextApp.prepare().then(() => {
   // app.use("/qa/api/profile", require("./api/profile"));
   app.use("/api/notifications", require("./api/notifications"));
   app.use("/api/qa/posts", require("./api/qa/posts"));
+  app.use("/api/qa/qanotifications", require("./api/qa/QAnotifications"));
+  app.use("/api/qa/profile", require("./api/qa/userquestions"));
 
   app.all("*", (req, res) => handle(req, res));
 

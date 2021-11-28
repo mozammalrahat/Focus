@@ -46,7 +46,7 @@ function ProfilePage({
       try {
         const { username } = router.query;
         const res = await axios.get(
-          `${baseUrl}/qa/api/profile/posts/${username}`,
+          `${baseUrl}/api/qa/profile/posts/${username}`,
           {
             headers: { Authorization: cookie.get("token") },
           }
@@ -65,6 +65,8 @@ function ProfilePage({
   useEffect(() => {
     showToastr && setTimeout(() => setShowToastr(false), 4000);
   }, [showToastr]);
+  console.log("Post Lists");
+  console.log(posts);
 
   return (
     <>

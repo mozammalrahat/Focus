@@ -10,7 +10,7 @@ const {
   removeLikeNotification,
   newCommentNotification,
   removeCommentNotification,
-} = require("../../utilsServer/notificationActions");
+} = require("../../utilsServer/qaNotificationActions");
 
 // CREATE A POST
 
@@ -88,7 +88,7 @@ router.get("/", authMiddleware, async (req, res) => {
           (post) =>
             post.user._id.toString() === loggedUser.following[i].user.toString()
         );
-
+        console.log(loggedUser.following[i].user.toString(), userId);
         if (foundPostsFromFollowing.length > 0)
           postsToBeSent.push(...foundPostsFromFollowing);
       }
@@ -277,15 +277,15 @@ router.post("/comment/:postId", authMiddleware, async (req, res) => {
     await post.comments.unshift(newComment);
     await post.save();
 
-    // if (post.user.toString() !== userId) {
-    //   await newNotification(
-    //     postId,
-    //     newComment._id,
-    //     userId,
-    //     post.user.toString(),
-    //     text
-    //   );
-    // }
+    if (post.user.toString() !== userId) {
+      await newCommentNotification(
+        postId,
+        newComment._id,
+        userId,
+        post.user.toString(),
+        text
+      );
+    }
 
     console.log("New Comment");
     console.log(newComment._id);
@@ -335,7 +335,7 @@ router.delete("/:postId/:commentId", authMiddleware, async (req, res) => {
       return res.status(200).send("Deleted Successfully");
     };
 
-    if (answer.user.toString() !== userId) {
+    if (comment.user.toString() !== userId) {
       if (user.role === "root") {
         await deleteComment();
       } else {

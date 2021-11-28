@@ -47,16 +47,13 @@ function Index({ user, postsData, errorLoading }) {
 
   if (posts.length === 0 || errorLoading) return <NoPosts />;
 
+  console.log(posts);
+
   return (
     <>
       {showToastr && <PostDeleteToastr />}
       <Segment>
-        <CreatePost
-          placeholder1="Ask a Question?"
-          placeholder2="Topic!"
-          user={user}
-          setPosts={setPosts}
-        />
+        <CreatePost user={user} setPosts={setPosts} />
 
         <InfiniteScroll
           hasMore={hasMore}
@@ -88,7 +85,7 @@ Index.getInitialProps = async (ctx) => {
       headers: { Authorization: token },
       params: { pageNumber: 1 },
     });
-
+    // console.log(res.data);
     return { postsData: res.data };
   } catch (error) {
     return { errorLoading: true };

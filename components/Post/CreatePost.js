@@ -1,9 +1,14 @@
+import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { Button, Divider, Form, Icon, Image, Message } from "semantic-ui-react";
 import { submitNewPost } from "../../utils/postActions";
+import { submitNewPost as submitNewQuestion } from "../../utils/qaActions";
 import uploadPic from "../../utils/uploadPicToCloudinary";
 
-function CreatePost({ user, setPosts, placeholder1, placeholder2 }) {
+function CreatePost({ user, setPosts }) {
+  const router = useRouter();
+  const pathString = router.pathname.slice(0, 3);
+
   const [newPost, setNewPost] = useState({ text: "", location: "" });
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
@@ -47,16 +52,25 @@ function CreatePost({ user, setPosts, placeholder1, placeholder2 }) {
         return setError("Error Uploading Image");
       }
     }
-
-    await submitNewPost(
-      newPost.text,
-      newPost.location,
-      picUrl,
-      setPosts,
-      setNewPost,
-      setError
-    );
-
+    {
+      pathString === "/qa"
+        ? await submitNewQuestion(
+            newPost.text,
+            newPost.location,
+            picUrl,
+            setPosts,
+            setNewPost,
+            setError
+          )
+        : await submitNewPost(
+            newPost.text,
+            newPost.location,
+            picUrl,
+            setPosts,
+            setNewPost,
+            setError
+          );
+    }
     setMedia(null);
     setMediaPreview(null);
     setLoading(false);
@@ -75,7 +89,9 @@ function CreatePost({ user, setPosts, placeholder1, placeholder2 }) {
         <Form.Group>
           <Image src={user.profilePicUrl} circular avatar inline />
           <Form.TextArea
-            placeholder={placeholder1}
+            placeholder={
+              pathString === "/qa" ? "Ask a Question?" : "Whats Happening"
+            }
             name="text"
             value={newPost.text}
             onChange={handleChange}
@@ -89,9 +105,9 @@ function CreatePost({ user, setPosts, placeholder1, placeholder2 }) {
             value={newPost.location}
             name="location"
             onChange={handleChange}
-            label="Add Topic"
+            label={pathString === "/qa" ? "Add Topic" : "Add Location"}
             icon="clipboard outline"
-            placeholder={placeholder2}
+            placeholder={pathString === "/qa" ? "Add Topic" : "Add Location"}
           />
 
           <input

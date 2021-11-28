@@ -3,6 +3,7 @@ const router = express.Router();
 const UserModel = require("../models/UserModel");
 const FollowerModel = require("../models/FollowerModel");
 const NotificationModel = require("../models/NotificationModel");
+const QANotificationModel = require("../models/qa/QANotificationModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const isEmail = require("validator/lib/isEmail");
@@ -46,17 +47,34 @@ router.post("/", async (req, res) => {
       return res.status(401).send("Invalid Credentials");
     }
 
-    const notificationModel = await NotificationModel.findOne({ user: user._id });
+    const notificationModel = await NotificationModel.findOne({
+      user: user._id,
+    });
+    const qaNotificationModel = await QANotificationModel.findOne({
+      user: user._id,
+    });
 
     if (!notificationModel) {
       await new NotificationModel({ user: user._id, notifications: [] }).save();
     }
 
+    if (!qaNotificationModel) {
+      await new QANotificationModel({
+        user: user._id,
+        qanotifications: [],
+      }).save();
+    }
+
     const payload = { userId: user._id };
-    jwt.sign(payload, process.env.jwtSecret, { expiresIn: "2d" }, (err, token) => {
-      if (err) throw err;
-      res.status(200).json(token);
-    });
+    jwt.sign(
+      payload,
+      process.env.jwtSecret,
+      { expiresIn: "2d" },
+      (err, token) => {
+        if (err) throw err;
+        res.status(200).json(token);
+      }
+    );
   } catch (error) {
     console.error(error);
     return res.status(500).send(`Server error`);

@@ -15,7 +15,7 @@ import {
 import calculateTime from "../../utils/calculateTime";
 import { deletePost, likePost } from "../../utils/postActions";
 import {
-  deleteComment as deleteQuestion,
+  deletePost as deleteQuestion,
   likePost as likeQuestion,
 } from "../../utils/qaActions";
 import CommentInputField from "./CommentInputField";

@@ -20,6 +20,7 @@ const UserSchema = new Schema(
     unreadMessage: { type: Boolean, default: false },
 
     unreadNotification: { type: Boolean, default: false },
+    unreadNotificationQA: { type: Boolean, default: false },
 
     role: { type: String, default: "user", enum: ["user", "root"] },
 
