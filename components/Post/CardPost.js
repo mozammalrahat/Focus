@@ -70,24 +70,14 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
 
       <Segment basic>
         <Card color="teal" fluid>
-          {post.picUrl && (
-            <Image
-              src={post.picUrl}
-              style={{ cursor: "pointer" }}
-              floated="left"
-              wrapped
-              ui={false}
-              alt="PostImage"
-              onClick={() => setShowModal(true)}
-            />
-          )}
-
           <Card.Content>
             <Image
+              className="propicIcon"
               floated="left"
               src={post.user.profilePicUrl}
               avatar
               circular
+              style={{ width: "3em", height: "3em", marginTop: "-3px" }}
             />
 
             {(user.role === "root" || post.user._id === user._id) && (
@@ -121,7 +111,15 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
               </>
             )}
 
-            <Card.Header>
+            <Card.Header
+              style={{
+                fontSize: "20px",
+                letterSpacing: "0.1px",
+                wordSpacing: "0.35px",
+                fontWeight: "600",
+                color: "black",
+              }}
+            >
               <Link href={`/studentshub/${post.user.username}`}>
                 <a>{post.user.name}</a>
               </Link>
@@ -129,18 +127,50 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
 
             <Card.Meta>{calculateTime(post.createdAt)}</Card.Meta>
 
-            {post.topic && <Card.Meta content={post.topic} />}
+            {post.topic && (
+              <Card.Meta
+                className="topic"
+                style={{
+                  fontSize: "22px",
+                  fontWeight: "600",
+                  letterSpacing: "0.1px",
+                  color: "black",
+                }}
+                content={post.topic}
+              />
+            )}
+            {/* {post.qa_toggle && <Card.Meta content={post.qa_toggle} />} */}
 
             <Card.Description
               style={{
-                fontSize: "17px",
+                marginTop: "40px",
+                fontSize: "20px",
                 letterSpacing: "0.1px",
-                wordSpacing: "0.35px",
+                // wordSpacing: "0.35px",
+                fontWeight: "600",
+                whiteSpace: "pre-wrap",
               }}
             >
               {post.text}
             </Card.Description>
           </Card.Content>
+
+          {post.picUrl && (
+            <Image
+              src={post.picUrl}
+              style={{
+                cursor: "pointer",
+                width: "98%",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+              floated="left"
+              wrapped
+              ui={false}
+              alt="PostImage"
+              onClick={() => setShowModal(true)}
+            />
+          )}
 
           <Card.Content extra>
             <Icon

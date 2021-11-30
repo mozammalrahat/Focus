@@ -25,45 +25,20 @@ function SideMenu({
             <Link href="/qa">
               <List.Item active={isActive("/")}>
                 <Icon
-                  name="home"
-                  size="large"
-                  color={isActive("/") && "teal"}
-                />
-                <List.Content>
-                  <List.Header content="Home" />
-                </List.Content>
-              </List.Item>
-            </Link>
-            <br />
-
-            <Link href="#">
-              <List.Item active={isActive("/messages")}>
-                <Icon
                   name="question circle outline"
                   size="large"
-                  color={
-                    (isActive("/studentshub/messages") && "teal") ||
-                    (unreadMessage && "orange")
-                  }
+                  color="teal"
                 />
                 <List.Content>
-                  <List.Header content="Q&A" />
+                  <List.Header content="Question" />
                 </List.Content>
               </List.Item>
             </Link>
-
             <br />
 
-            <Link href="#">
-              <List.Item active={isActive("/jobpost")}>
-                <Icon
-                  name="search"
-                  size="large"
-                  color={
-                    (isActive("/studentshub/messages") && "teal") ||
-                    (unreadMessage && "orange")
-                  }
-                />
+            <Link href="/qa/jobpostIndex">
+              <List.Item active={isActive("/jobpostIndex")}>
+                <Icon name="users" size="large" color="teal" />
                 <List.Content>
                   <List.Header content="Job Posts" />
                 </List.Content>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useRouter } from "next/router";
 import cookie from "js-cookie";
 import { parseCookies } from "nookies";
 import React, { useEffect, useState } from "react";
@@ -12,6 +13,7 @@ import {
 import { PostDeleteToastr } from "../../components/Layout/Toastr";
 import CardPost from "../../components/Post/CardPost";
 import CreatePost from "../../components/Post/CreatePost";
+import CreatePostQA from "../../components/Post/CreatePostQA";
 import baseUrl from "../../utils/baseUrl";
 
 function Index({ user, postsData, errorLoading }) {
@@ -20,6 +22,10 @@ function Index({ user, postsData, errorLoading }) {
   const [hasMore, setHasMore] = useState(true);
 
   const [pageNumber, setPageNumber] = useState(2);
+  const router = useRouter();
+  const pathString = router.pathname;
+  // const path = pathString.slice(0, 4);
+  // console.log("1------->", pathString);
 
   useEffect(() => {
     document.title = `Welcome, ${user.name.split(" ")[0]}`;
@@ -39,46 +45,83 @@ function Index({ user, postsData, errorLoading }) {
       if (res.data.length === 0) setHasMore(false);
 
       setPosts((prev) => [...prev, ...res.data]);
+      // console.log("2------->", res.data);
       setPageNumber((prev) => prev + 1);
     } catch (error) {
       alert("Error fetching Posts");
     }
   };
-
-  if (posts.length === 0 || errorLoading)
-    return (
-      <>
-        <CreatePost user={user} setPosts={setPosts} />
-        <NoPosts />
-      </>
-    );
-
-  console.log(posts);
+  if (pathString === "/qa") {
+    if (posts.length === 0 || errorLoading)
+      return (
+        <>
+          <CreatePostQA user={user} setPosts={setPosts} />
+          <NoPosts />
+        </>
+      );
+  } else {
+    if (posts.length === 0 || errorLoading)
+      return (
+        <>
+          <CreatePost user={user} setPosts={setPosts} />
+          <NoPosts />
+        </>
+      );
+  }
 
   return (
     <>
-      {showToastr && <PostDeleteToastr />}
-      <Segment>
-        <CreatePost user={user} setPosts={setPosts} />
+      {pathString === "/qa" ? (
+        <>
+          {showToastr && <PostDeleteToastr />}
+          <Segment>
+            <CreatePostQA user={user} setPosts={setPosts} />
 
-        <InfiniteScroll
-          hasMore={hasMore}
-          next={fetchDataOnScroll}
-          loader={<PlaceHolderPosts />}
-          endMessage={<EndMessage />}
-          dataLength={posts.length}
-        >
-          {posts.map((post) => (
-            <CardPost
-              key={post._id}
-              post={post}
-              user={user}
-              setPosts={setPosts}
-              setShowToastr={setShowToastr}
-            />
-          ))}
-        </InfiniteScroll>
-      </Segment>
+            <InfiniteScroll
+              hasMore={hasMore}
+              next={fetchDataOnScroll}
+              loader={<PlaceHolderPosts />}
+              endMessage={<EndMessage />}
+              dataLength={posts.length}
+            >
+              {posts.map((post) => (
+                <CardPost
+                  key={post._id}
+                  post={post}
+                  user={user}
+                  setPosts={setPosts}
+                  setShowToastr={setShowToastr}
+                />
+              ))}
+            </InfiniteScroll>
+          </Segment>
+        </>
+      ) : (
+        <>
+          {showToastr && <PostDeleteToastr />}
+          <Segment>
+            <CreatePost user={user} setPosts={setPosts} />
+
+            <InfiniteScroll
+              hasMore={hasMore}
+              next={fetchDataOnScroll}
+              loader={<PlaceHolderPosts />}
+              endMessage={<EndMessage />}
+              dataLength={posts.length}
+            >
+              {posts.map((post) => (
+                <CardPost
+                  key={post._id}
+                  post={post}
+                  user={user}
+                  setPosts={setPosts}
+                  setShowToastr={setShowToastr}
+                />
+              ))}
+            </InfiniteScroll>
+          </Segment>
+        </>
+      )}
     </>
   );
 }
@@ -89,7 +132,7 @@ Index.getInitialProps = async (ctx) => {
 
     const res = await axios.get(`${baseUrl}/api/qa/posts`, {
       headers: { Authorization: token },
-      params: { pageNumber: 1 },
+      params: { pageNumber: 1, toggle: "Questions" },
     });
     // console.log(res.data);
     return { postsData: res.data };

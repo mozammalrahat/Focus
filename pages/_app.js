@@ -19,12 +19,13 @@ class MyApp extends App {
       ctx.pathname === "/studentshub/notifications" ||
       ctx.pathname === "/studentshub/post/[postId]" ||
       ctx.pathname === "/qa" ||
+      ctx.pathname === "/qa/jobpostIndex" ||
       ctx.pathname === "/qa/[username]" ||
       ctx.pathname === "/qa/notifications" ||
       ctx.pathname === "/qa/post/[postId]";
 
-    console.log("Path name is :");
-    console.log(ctx.pathname);
+    // console.log("Path name is :");
+    // console.log(ctx.pathname);
     if (!token) {
       protectedRoutes && redirectUser(ctx, "/");
     }
@@ -40,10 +41,10 @@ class MyApp extends App {
         });
 
         const { user, userFollowStats } = res.data;
-        console.log("User is :", user);
+        // console.log("User is :", user);
 
         if (user && ctx.pathname !== "/" && !protectedRoutes) {
-          console.log("this is from _app.js");
+          // console.log("this is from _app.js");
           redirectUser(ctx, "/");
         }
 

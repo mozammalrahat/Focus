@@ -2,10 +2,12 @@ import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { Button, Divider, Form, Icon, Image, Message } from "semantic-ui-react";
 import { submitNewPost } from "../../utils/postActions";
-import { submitNewPost as submitNewQuestion } from "../../utils/qaActions";
+// import { submitNewPost as submitNewQuestion } from "../../utils/qaActions";
 import uploadPic from "../../utils/uploadPicToCloudinary";
 
 function CreatePost({ user, setPosts }) {
+  // console.log("Inside CreatePost");
+
   const router = useRouter();
   const pathString = router.pathname.slice(0, 3);
 
@@ -38,6 +40,7 @@ function CreatePost({ user, setPosts }) {
     paddingTop: media === null && "60px",
     cursor: "pointer",
     borderColor: highlighted ? "green" : "black",
+    marginLeft: "55px",
   });
 
   const handleSubmit = async (e) => {
@@ -53,23 +56,14 @@ function CreatePost({ user, setPosts }) {
       }
     }
     {
-      pathString === "/qa"
-        ? await submitNewQuestion(
-            newPost.text,
-            newPost.location,
-            picUrl,
-            setPosts,
-            setNewPost,
-            setError
-          )
-        : await submitNewPost(
-            newPost.text,
-            newPost.location,
-            picUrl,
-            setPosts,
-            setNewPost,
-            setError
-          );
+      await submitNewPost(
+        newPost.text,
+        newPost.location,
+        picUrl,
+        setPosts,
+        setNewPost,
+        setError
+      );
     }
     setMedia(null);
     setMediaPreview(null);
@@ -87,38 +81,51 @@ function CreatePost({ user, setPosts }) {
         />
 
         <Form.Group>
-          <Image src={user.profilePicUrl} circular avatar inline />
+          <Image
+            src={user.profilePicUrl}
+            circular
+            avatar
+            inline
+            style={{ width: "3em", height: "3em" }}
+          />
           <Form.TextArea
-            placeholder={
-              pathString === "/qa" ? "Ask a Question?" : "Whats Happening"
-            }
+            placeholder={"Whats Happening"}
             name="text"
             value={newPost.text}
             onChange={handleChange}
             rows={4}
             width={14}
+            style={{
+              borderColor: "black",
+              borderStyle: "solid",
+              borderWidth: "1px",
+            }}
           />
         </Form.Group>
+        <div
+          className="inputGroup"
+          style={{ marginLeft: "55px", marginTop: "20px" }}
+        >
+          <Form.Group>
+            <Form.Input
+              value={newPost.location}
+              name="location"
+              onChange={handleChange}
+              // label={"Add Location"}
+              icon="clipboard outline"
+              placeholder={"Add Location"}
+            />
 
-        <Form.Group>
-          <Form.Input
-            value={newPost.location}
-            name="location"
-            onChange={handleChange}
-            label={pathString === "/qa" ? "Add Topic" : "Add Location"}
-            icon="clipboard outline"
-            placeholder={pathString === "/qa" ? "Add Topic" : "Add Location"}
-          />
-
-          <input
-            ref={inputRef}
-            onChange={handleChange}
-            name="media"
-            style={{ display: "none" }}
-            type="file"
-            accept="image/*"
-          />
-        </Form.Group>
+            <input
+              ref={inputRef}
+              onChange={handleChange}
+              name="media"
+              style={{ display: "none" }}
+              type="file"
+              accept="image/*"
+            />
+          </Form.Group>
+        </div>
 
         <div
           onClick={() => inputRef.current.click()}
@@ -160,9 +167,20 @@ function CreatePost({ user, setPosts }) {
         <Button
           circular
           disabled={newPost.text === "" || loading}
-          content={<strong>Post</strong>}
-          style={{ backgroundColor: "#1DA1F2", color: "white" }}
+          content={
+            <strong style={{ fontSize: "20px", fontWeight: "700" }}>
+              Post
+            </strong>
+          }
+          style={{
+            marginLeft: "48px",
+            backgroundColor: "#1DA1F2",
+            color: "white",
+            width: "190px",
+            height: "55px",
+          }}
           icon="send"
+          size="big"
           loading={loading}
         />
       </Form>

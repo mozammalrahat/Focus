@@ -15,7 +15,7 @@ const {
 // CREATE A POST
 
 router.post("/", authMiddleware, async (req, res) => {
-  const { text, topic, picUrl } = req.body;
+  const { text, topic, qa_toggle, picUrl } = req.body;
 
   if (text.length < 1)
     return res.status(401).send("Text must be atleast 1 character");
@@ -27,6 +27,7 @@ router.post("/", authMiddleware, async (req, res) => {
     };
     if (topic) newPost.topic = topic;
     if (picUrl) newPost.picUrl = picUrl;
+    if (qa_toggle) newPost.qa_toggle = qa_toggle;
 
     const post = await new PostModel(newPost).save();
 
@@ -41,10 +42,17 @@ router.post("/", authMiddleware, async (req, res) => {
 // GET ALL POSTS
 
 router.get("/", authMiddleware, async (req, res) => {
-  const { pageNumber } = req.query;
+  const { pageNumber, toggle } = req.query;
+
+  // console.log("pathStringth Inside qa-->", toggle);
 
   const number = Number(pageNumber);
   const size = 8;
+
+  // if (toggle == "JobPost") {
+  //   filtered_post = await PostModel.find({ qa_toggle: "JobPost" });
+  //   // console.log("filtered_post", filtered_post);
+  // }
 
   try {
     let posts;
@@ -103,8 +111,18 @@ router.get("/", authMiddleware, async (req, res) => {
       postsToBeSent.sort((a, b) => [
         new Date(b.createdAt) - new Date(a.createdAt),
       ]);
-
-    return res.json(postsToBeSent);
+    // console.log("toggle = ", toggle);
+    if (toggle == "JobPost") {
+      filtered_post = postsToBeSent.filter(
+        (post) => post.qa_toggle == "JobPost"
+      );
+      return res.json(filtered_post);
+    } else {
+      filtered_post = postsToBeSent.filter(
+        (post) => post.qa_toggle == "Question"
+      );
+      return res.json(filtered_post);
+    }
   } catch (error) {
     console.error(error);
     return res.status(500).send(`Server error`);

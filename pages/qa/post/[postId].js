@@ -22,6 +22,8 @@ function PostPage({ post, errorLoading, user }) {
     return <NoPostFound />;
   }
 
+  // console.log("@@post.qa_toggle------->", post.qa_toggle);
+
   const [votes, setVotes] = useState(post.votes);
 
   const isVoted =

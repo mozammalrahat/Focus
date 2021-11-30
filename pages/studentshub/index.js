@@ -34,6 +34,7 @@ function Index({ user, postsData, errorLoading }) {
       const res = await axios.get(`${baseUrl}/api/posts`, {
         headers: { Authorization: cookie.get("token") },
         params: { pageNumber },
+        
       });
 
       if (res.data.length === 0) setHasMore(false);

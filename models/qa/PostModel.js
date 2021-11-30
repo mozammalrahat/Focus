@@ -9,6 +9,8 @@ const PostSchema = new Schema(
 
     topic: { type: String },
 
+    qa_toggle: { type: String },
+
     picUrl: { type: String },
 
     likes: [{ user: { type: Schema.Types.ObjectId, ref: "User" } }],

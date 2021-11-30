@@ -11,13 +11,20 @@ const Axios = axios.create({
 export const submitNewPost = async (
   text,
   topic,
+  qa_toggle,
   picUrl,
   setPosts,
   setNewPost,
   setError
 ) => {
   try {
-    const res = await Axios.post("/", { text, topic, picUrl });
+    // if (qa == "Question") {
+    //   console.log("qa-->", qa);
+    // } else {
+    //   console.log(qa);
+    // }
+
+    const res = await Axios.post("/", { text, topic, qa_toggle, picUrl });
 
     setPosts((prev) => [res.data, ...prev]);
     setNewPost({ text: "", topic: "" });
