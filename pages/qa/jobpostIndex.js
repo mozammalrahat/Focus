@@ -39,7 +39,7 @@ function jobpost({ user, postsData, errorLoading }) {
       const res = await axios.get(`${baseUrl}/api/qa/posts`, {
         headers: { Authorization: cookie.get("token") },
 
-        params: { pageNumber },
+        params: { pageNumber, toggle: "JobPost" },
       });
 
       if (res.data.length === 0) setHasMore(false);

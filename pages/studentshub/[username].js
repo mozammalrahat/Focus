@@ -25,6 +25,8 @@ function ProfilePage({
   userFollowStats,
 }) {
   const router = useRouter();
+  const pathString = router.pathname;
+  console.log("Inside Profile page --> pathString", pathString);
 
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);

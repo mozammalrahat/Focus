@@ -25,6 +25,9 @@ function ProfilePage({
   userFollowStats,
 }) {
   const router = useRouter();
+  // const router = useRouter();
+  const pathString = router.pathname;
+  console.log("Inside Profile page --> pathString", pathString);
 
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -46,7 +49,7 @@ function ProfilePage({
       try {
         const { username } = router.query;
         const res = await axios.get(
-          `${baseUrl}/api/qa/profile/posts/${username}`,
+          `${baseUrl}/api/qa/profile/posts/${username}`, // eikhane ase na /studenthub/useder namee chole jay.
           {
             headers: { Authorization: cookie.get("token") },
           }
@@ -65,8 +68,8 @@ function ProfilePage({
   useEffect(() => {
     showToastr && setTimeout(() => setShowToastr(false), 4000);
   }, [showToastr]);
-  console.log("Post Lists");
-  console.log(posts);
+  // console.log("Post Lists");
+  // console.log(posts);
 
   return (
     <>
@@ -152,7 +155,7 @@ ProfilePage.getInitialProps = async (ctx) => {
     const { username } = ctx.query;
     const { token } = parseCookies(ctx);
 
-    const res = await axios.get(`${baseUrl}/api/profile/${username}`, {
+    const res = await axios.get(`${baseUrl}/api/qa/profile/${username}`, {
       headers: { Authorization: token },
     });
 

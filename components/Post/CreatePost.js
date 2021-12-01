@@ -108,6 +108,11 @@ function CreatePost({ user, setPosts }) {
         >
           <Form.Group>
             <Form.Input
+              style={{
+                borderColor: "black",
+                borderStyle: "solid",
+                borderWidth: "1px",
+              }}
               value={newPost.location}
               name="location"
               onChange={handleChange}

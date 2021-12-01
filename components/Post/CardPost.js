@@ -26,6 +26,10 @@ import PostComments from "./PostComments";
 
 function CardPost({ post, user, setPosts, setShowToastr }) {
   const [likes, setLikes] = useState(post.likes);
+  const router = useRouter();
+  const pathString = router.pathname;
+  // console.log("Inside Profile page --> pathString", pathString);
+  // console.log("Inside Profile page --> pathString", pathString);
 
   const isLiked =
     likes.length > 0 &&
@@ -46,8 +50,6 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
     comments,
     setComments,
   });
-  const router = useRouter();
-  const pathString = router.pathname.slice(0, 3);
 
   return (
     <>
@@ -120,9 +122,19 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
                 color: "black",
               }}
             >
-              <Link href={`/studentshub/${post.user.username}`}>
-                <a>{post.user.name}</a>
-              </Link>
+              {pathString === "/qa" ? (
+                <>
+                  <Link href={`/qa/${post.user.username}`}>
+                    <a>{post.user.name}</a>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link href={`/studentshub/${post.user.username}`}>
+                    <a>{post.user.name}</a>
+                  </Link>
+                </>
+              )}
             </Card.Header>
 
             <Card.Meta>{calculateTime(post.createdAt)}</Card.Meta>

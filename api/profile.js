@@ -69,29 +69,29 @@ router.get(`/posts/:username`, authMiddleware, async (req, res) => {
   }
 });
 
-// GET QUESTIONS OF USER
-router.get(`/qa/posts/:username`, authMiddleware, async (req, res) => {
-  try {
-    const { username } = req.params;
+// // GET QUESTIONS OF USER
+// router.get(`/qa/posts/:username`, authMiddleware, async (req, res) => {
+//   try {
+//     const { username } = req.params;
 
-    const user = await QuestionModel.findOne({
-      username: username.toLowerCase(),
-    });
-    if (!user) {
-      return res.status(404).send("No User Found");
-    }
+//     const user = await QuestionModel.findOne({
+//       username: username.toLowerCase(),
+//     });
+//     if (!user) {
+//       return res.status(404).send("No User Found");
+//     }
 
-    const posts = await QuestionModel.find({ user: user._id })
-      .sort({ createdAt: -1 })
-      .populate("user")
-      .populate("answers.user");
+//     const posts = await QuestionModel.find({ user: user._id })
+//       .sort({ createdAt: -1 })
+//       .populate("user")
+//       .populate("answers.user");
 
-    return res.json(posts);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).send("Server Error");
-  }
-});
+//     return res.json(posts);
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).send("Server Error");
+//   }
+// });
 
 // GET FOLLOWERS OF USER
 router.get("/followers/:userId", authMiddleware, async (req, res) => {

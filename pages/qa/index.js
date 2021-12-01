@@ -39,7 +39,7 @@ function Index({ user, postsData, errorLoading }) {
     try {
       const res = await axios.get(`${baseUrl}/api/qa/posts`, {
         headers: { Authorization: cookie.get("token") },
-        params: { pageNumber },
+        params: { pageNumber, toggle: "Questions" },
       });
 
       if (res.data.length === 0) setHasMore(false);
