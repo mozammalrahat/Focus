@@ -96,7 +96,7 @@ router.get("/", authMiddleware, async (req, res) => {
           (post) =>
             post.user._id.toString() === loggedUser.following[i].user.toString()
         );
-        console.log(loggedUser.following[i].user.toString(), userId);
+        // console.log(loggedUser.following[i].user.toString(), userId);
         if (foundPostsFromFollowing.length > 0)
           postsToBeSent.push(...foundPostsFromFollowing);
       }

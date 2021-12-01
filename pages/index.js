@@ -1,75 +1,111 @@
 import cookie from "js-cookie";
 import Router from "next/router";
 import React from "react";
-import { Grid, Icon } from "semantic-ui-react";
+import { Button, Grid, Icon, Image } from "semantic-ui-react";
 
 function Home() {
   const handleLink = (path) => {
     if (cookie.get("token")) {
       Router.push(path);
-      console.log("redirecting to Students Hub");
+      // console.log("redirecting to Students Hub");
     } else {
       Router.push("/login");
     }
   };
 
   return (
-    <>
+    <div style={{ marginTop: "40px" }}>
+      <Image
+        src="/focus.PNG"
+        size="large"
+        style={{
+          marginTop: "10px",
+          marginLeft: "163px",
+          width: "270px",
+        }}
+      />
       <Grid
-        style={{ marginTop: 80 }}
-        centered
-        stackable
-        relaxed="very"
-        celled
-        stretched
+        style={{
+          // marginTop: "10px",
+          marginLeft: "50px",
+        }}
       >
-        <Grid.Row centered stretched>
-          <Grid.Column width={8} textAlign="center" verticalAlign="middle">
-            <Icon
-              name="question circle"
-              size="massive"
-              color="blue"
-              style={{ cursor: "pointer" }}
-              onClick={() => handleLink("qa/")}
-            />
-          </Grid.Column>
-
-          <Grid.Column width={8} textAlign="center" verticalAlign="middle">
-            <h1>Job Resources & QA Section</h1>
-          </Grid.Column>
+        <Grid.Row style={{ margin: "20px" }}>
+          <Button
+            className="button1"
+            style={{
+              borderColor: "black",
+              borderStyle: "outset",
+              color: "black",
+              backgroundColor: "#c4e6f3",
+              height: "100px",
+              borderRadius: "20px",
+            }}
+            inverted
+            onClick={() => handleLink("qa/")}
+          >
+            <div>
+              <h1>
+                <Icon
+                  name="question circle"
+                  size="large"
+                  style={{ cursor: "pointer" }}
+                />{" "}
+                Job Resources & QA Section
+              </h1>
+            </div>
+          </Button>
         </Grid.Row>
 
-        <Grid.Row stretched>
-          <Grid.Column width={8} textAlign="center" verticalAlign="middle">
-            <h1>Students Hub</h1>
-          </Grid.Column>
-
-          <Grid.Column width={8} textAlign="center" verticalAlign="middle">
-            <Icon
-              name="student"
-              size="massive"
-              color="blue"
-              style={{ cursor: "pointer" }}
-              onClick={() => handleLink("studentshub/")}
-            />
-          </Grid.Column>
+        <Grid.Row style={{ margin: "20px" }}>
+          <Button
+            style={{
+              borderColor: "black",
+              borderStyle: "outset",
+              color: "black",
+              backgroundColor: "#c4e6f3",
+              height: "100px",
+              borderRadius: "20px",
+            }}
+            inverted
+            onClick={() => handleLink("studentshub/")}
+          >
+            <div>
+              <h1 style={{ width: "408px" }}>
+                <Icon
+                  name="student"
+                  size="large"
+                  style={{ cursor: "pointer" }}
+                />{" "}
+                Students Hub
+              </h1>
+            </div>
+          </Button>
         </Grid.Row>
 
-        <Grid.Row stretched>
-          <Grid.Column width={8} textAlign="center" verticalAlign="middle">
-            <Icon
-              name="book"
-              size="massive"
-              color="blue"
-              style={{ cursor: "pointer" }}
-            />
-          </Grid.Column>
-          <Grid.Column width={8} textAlign="center" verticalAlign="middle">
-            <h1>Resources</h1>
-          </Grid.Column>
+        <Grid.Row style={{ margin: "20px" }}>
+          <Button
+            style={{
+              borderColor: "black",
+              borderStyle: "outset",
+              color: "black",
+              backgroundColor: "#c4e6f3",
+              height: "100px",
+              borderRadius: "20px",
+            }}
+            inverted
+            onClick={() => handleLink("/")}
+          >
+            <div>
+              <h1 style={{ width: "408px" }}>
+                <Icon name="book" size="large" style={{ cursor: "pointer" }} />{" "}
+                Resources
+              </h1>
+            </div>
+          </Button>
         </Grid.Row>
       </Grid>
-    </>
+    </div>
   );
 }
 

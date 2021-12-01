@@ -11,8 +11,8 @@ router.get("/", authMiddleware, async (req, res) => {
     const user = await QANotificationModel.findOne({ user: userId })
       .populate("qanotifications.user")
       .populate("qanotifications.question");
-    console.log("QA Notifications");
-    console.log(user);
+    // console.log("QA Notifications");
+    // console.log(user);
     return res.json(user.qanotifications);
   } catch (error) {
     console.error(error);

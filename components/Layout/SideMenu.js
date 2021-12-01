@@ -22,12 +22,25 @@ function SideMenu({
       >
         {pathString === "/qa" ? (
           <>
+            <Link href="/">
+              <List.Item active={isActive("/")}>
+                <Icon
+                  name="home"
+                  size="large"
+                  color={isActive("/") && "teal"}
+                />
+                <List.Content>
+                  <List.Header content="Home" />
+                </List.Content>
+              </List.Item>
+            </Link>
+            <br />
             <Link href="/qa">
               <List.Item active={isActive("/")}>
                 <Icon
                   name="question circle outline"
                   size="large"
-                  color="teal"
+                  color="blue"
                 />
                 <List.Content>
                   <List.Header content="Question" />
@@ -38,7 +51,8 @@ function SideMenu({
 
             <Link href="/qa/jobpostIndex">
               <List.Item active={isActive("/jobpostIndex")}>
-                <Icon name="users" size="large" color="teal" />
+                <Icon name="briefcase" size="large" color="blue" />
+
                 <List.Content>
                   <List.Header content="Job Posts" />
                 </List.Content>
@@ -96,7 +110,7 @@ function SideMenu({
           </>
         ) : (
           <>
-            <Link href="/studentshub">
+            <Link href="/">
               <List.Item active={isActive("/")}>
                 <Icon
                   name="home"
@@ -105,6 +119,16 @@ function SideMenu({
                 />
                 <List.Content>
                   <List.Header content="Home" />
+                </List.Content>
+              </List.Item>
+            </Link>
+            <br />
+
+            <Link href="/studentshub">
+              <List.Item active={isActive("/")}>
+                <Icon name="group" size="large" color="blue" />
+                <List.Content>
+                  <List.Header content="StudentHub" />
                 </List.Content>
               </List.Item>
             </Link>
