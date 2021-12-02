@@ -206,6 +206,15 @@ function SideMenu({
               </List.Item>
             </Link>
             <br />
+            <Link href="/resource/university">
+              <List.Item active={isActive("/")}>
+                <Icon name="university" size="large" color="blue" />
+                <List.Content>
+                  <List.Header content="Universities" />
+                </List.Content>
+              </List.Item>
+            </Link>
+            <br />
             <Link href="#">
               <List.Item active={isActive("/messages")}>
                 <Icon
