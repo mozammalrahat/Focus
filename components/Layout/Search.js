@@ -8,8 +8,8 @@ import baseUrl from "../../utils/baseUrl";
 let cancel;
 
 function SearchComponent() {
-  // const router = useRouter();
-  // const pathString = router.pathname.slice(0, 3);
+  const router = useRouter();
+  const pathString = router.pathname.slice(0, 3);
   // console.log("pathString-->", pathString);
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
