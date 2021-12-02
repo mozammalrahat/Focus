@@ -14,12 +14,11 @@ function Home() {
   };
 
   return (
-    <div style={{ marginTop: "40px" }}>
+    <div>
       <Image
         src="/focus.PNG"
         size="large"
         style={{
-          marginTop: "10px",
           marginLeft: "163px",
           width: "270px",
         }}
@@ -94,12 +93,12 @@ function Home() {
               borderRadius: "20px",
             }}
             inverted
-            onClick={() => handleLink("/")}
+            onClick={() => handleLink("resource/")}
           >
             <div>
               <h1 style={{ width: "408px" }}>
                 <Icon name="book" size="large" style={{ cursor: "pointer" }} />{" "}
-                Resources
+                Higher Study & Resources
               </h1>
             </div>
           </Button>

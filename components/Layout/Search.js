@@ -1,12 +1,16 @@
 import axios from "axios";
 import cookie from "js-cookie";
 import Router from "next/router";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { Image, List, Search } from "semantic-ui-react";
 import baseUrl from "../../utils/baseUrl";
 let cancel;
 
 function SearchComponent() {
+  // const router = useRouter();
+  // const pathString = router.pathname.slice(0, 3);
+  // console.log("pathString-->", pathString);
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
@@ -51,9 +55,13 @@ function SearchComponent() {
       results={results}
       onSearchChange={handleChange}
       minCharacters={1}
-      onResultSelect={(e, data) =>
-        Router.push(`studentshub/${data.result.username}`)
-      }
+      onResultSelect={(e, data) => {
+        if (pathString === "/qa") {
+          Router.push(`qa/${data.result.username}`);
+        } else {
+          Router.push(`studentshub/${data.result.username}`);
+        }
+      }}
     />
   );
 }

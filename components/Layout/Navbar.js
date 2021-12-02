@@ -6,13 +6,17 @@ import Link from "next/link";
 function Navbar() {
   const router = useRouter();
 
-  const isActive = route => router.pathname === route;
+  const isActive = (route) => router.pathname === route;
 
   return (
     <Menu fluid borderless>
       <Container text>
         <Link href="/login">
-          <Menu.Item header active={isActive("/login")}>
+          <Menu.Item
+            header
+            active={isActive("/login")}
+            style={{ marginLeft: "177px" }}
+          >
             <Icon size="large" name="sign in" />
             Login
           </Menu.Item>
