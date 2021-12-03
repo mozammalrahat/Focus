@@ -197,7 +197,7 @@ function SideMenu({
               </List.Item>
             </Link>
             <br />
-            <Link href="/resource">
+            <Link href="/resource/files">
               <List.Item active={isActive("/")}>
                 <Icon name="newspaper outline" size="large" color="blue" />
                 <List.Content>
