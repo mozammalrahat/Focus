@@ -14,7 +14,7 @@ function ImageModal({
   likes,
   isLiked,
   comments,
-  setComments
+  setComments,
 }) {
   return (
     <>
@@ -44,8 +44,9 @@ function ImageModal({
                 style={{
                   fontSize: "17px",
                   letterSpacing: "0.1px",
-                  wordSpacing: "0.35px"
-                }}>
+                  wordSpacing: "0.35px",
+                }}
+              >
                 {post.text}
               </Card.Description>
             </Card.Content>
@@ -65,7 +66,9 @@ function ImageModal({
                 trigger={
                   likes.length > 0 && (
                     <span className="spanLikesList">
-                      {`${likes.length} ${likes.length === 1 ? "like" : "likes"}`}
+                      {`${likes.length} ${
+                        likes.length === 1 ? "like" : "likes"
+                      }`}
                     </span>
                   )
                 }
@@ -77,10 +80,11 @@ function ImageModal({
                 style={{
                   overflow: "auto",
                   height: comments.length > 2 ? "200px" : "60px",
-                  marginBottom: "8px"
-                }}>
+                  marginBottom: "8px",
+                }}
+              >
                 {comments.length > 0 &&
-                  comments.map(comment => (
+                  comments.map((comment) => (
                     <PostComments
                       key={comment._id}
                       comment={comment}

@@ -206,7 +206,7 @@ function SideMenu({
               </List.Item>
             </Link>
             <br />
-            <Link href="/resource/university">
+            <Link href="/resource/universityIndex">
               <List.Item active={isActive("/")}>
                 <Icon name="university" size="large" color="blue" />
                 <List.Content>

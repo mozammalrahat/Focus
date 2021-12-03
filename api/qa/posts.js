@@ -43,17 +43,8 @@ router.post("/", authMiddleware, async (req, res) => {
 
 router.get("/", authMiddleware, async (req, res) => {
   const { pageNumber, toggle } = req.query;
-
-  // console.log("pathStringth Inside qa-->", toggle);
-
   const number = Number(pageNumber);
   const size = 8;
-
-  // if (toggle == "JobPost") {
-  //   filtered_post = await PostModel.find({ qa_toggle: "JobPost" });
-  //   // console.log("filtered_post", filtered_post);
-  // }
-
   try {
     let posts;
 

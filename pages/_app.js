@@ -24,7 +24,7 @@ class MyApp extends App {
       ctx.pathname === "/qa/notifications" ||
       ctx.pathname === "/qa/post/[postId]" ||
       ctx.pathname === "/resource" ||
-      ctx.pathname === "/resource/university";
+      ctx.pathname === "/resource/universityIndex";
 
     // console.log("Path name is :");
     // console.log(ctx.pathname);

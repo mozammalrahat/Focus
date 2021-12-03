@@ -18,6 +18,7 @@ function Signup() {
     name: "",
     email: "",
     registrationNumber: "",
+    university,
     password: "",
     bio: "",
     facebook: "",
@@ -26,7 +27,7 @@ function Signup() {
     instagram: "",
   });
 
-  const { name, email, registrationNumber, password, bio } = user;
+  const { name, email, registrationNumber, university, password, bio } = user;
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -60,6 +61,7 @@ function Signup() {
       name,
       email,
       registrationNumber,
+      university,
       password,
       bio,
     }).every((item) => Boolean(item));
@@ -172,6 +174,17 @@ function Signup() {
             onChange={handleChange}
             fluid
             icon="address card outline"
+            iconPosition="left"
+          />
+          <Form.Input
+            required
+            label="University"
+            placeholder="University"
+            name="university"
+            value={university}
+            onChange={handleChange}
+            fluid
+            icon="university"
             iconPosition="left"
           />
 
