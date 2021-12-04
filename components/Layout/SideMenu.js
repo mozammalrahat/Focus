@@ -197,6 +197,17 @@ function SideMenu({
               </List.Item>
             </Link>
             <br />
+
+            <Link href="/resource">
+              <List.Item active={isActive("/")}>
+                <Icon name="graduation cap" size="large" color="blue" />
+                <List.Content>
+                  <List.Header content="Scholarships" />
+                </List.Content>
+              </List.Item>
+            </Link>
+            <br />
+
             <Link href="/resource/files">
               <List.Item active={isActive("/")}>
                 <Icon name="newspaper outline" size="large" color="blue" />

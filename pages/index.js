@@ -15,7 +15,7 @@ function Home({ user }) {
     }
   };
 
-  console.log(email);
+  // console.log(email);
 
   return (
     <>

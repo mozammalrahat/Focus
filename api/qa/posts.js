@@ -102,15 +102,21 @@ router.get("/", authMiddleware, async (req, res) => {
       postsToBeSent.sort((a, b) => [
         new Date(b.createdAt) - new Date(a.createdAt),
       ]);
+
     // console.log("toggle = ", toggle);
     if (toggle == "JobPost") {
       filtered_post = postsToBeSent.filter(
         (post) => post.qa_toggle == "JobPost"
       );
       return res.json(filtered_post);
+    } else if (toggle == "Questions") {
+      filtered_post = postsToBeSent.filter(
+        (post) => post.qa_toggle == "Questions"
+      );
+      return res.json(filtered_post);
     } else {
       filtered_post = postsToBeSent.filter(
-        (post) => post.qa_toggle == "Question"
+        (post) => post.qa_toggle == "resource"
       );
       return res.json(filtered_post);
     }
