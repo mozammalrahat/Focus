@@ -9,7 +9,9 @@ const FileSchema = new Schema(
 
     fileUrl: { type: String, required: true },
 
-    fileType: { type: String },
+    fileType: { type: String, required: true },
+
+    fileTopic: { type: String },
   },
   { timestamps: true }
 );

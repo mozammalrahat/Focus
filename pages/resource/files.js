@@ -1,17 +1,21 @@
 import axios from "axios";
 import { parseCookies } from "nookies";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Form, Icon, Message, Table } from "semantic-ui-react";
 import baseUrl from "../../utils/baseUrl";
-import { submitNewFile } from "../../utils/fileActions";
+import { deleteFile, submitNewFile } from "../../utils/fileActions";
 import uploadDocument from "../../utils/uploadDocumentToCloudinary";
 
 function Files({ user, previousFiles }) {
-  console.log(user);
-  const [newFile, setNewFile] = useState({ name: "", type: "" });
+  const [newFile, setNewFile] = useState({ name: "", type: "", topic: "" });
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
   const [filesList, setFilesList] = useState(previousFiles || []);
+
+  const [showToastr, setShowToastr] = useState(false);
+  useEffect(() => {
+    showToastr && setTimeout(() => setShowToastr(false), 3000);
+  }, [showToastr]);
 
   const [error, setError] = useState(null);
 
@@ -25,9 +29,14 @@ function Files({ user, previousFiles }) {
   };
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setNewFile(getFileNameAndType(files));
     if (name === "media") {
+      let dict = {};
+      dict = getFileNameAndType(files);
+      setNewFile((prev) => ({ ...prev, ...dict }));
       setMedia(files[0]);
+    }
+    if (name === "topic") {
+      setNewFile((prev) => ({ ...prev, [name]: value }));
     }
   };
 
@@ -61,6 +70,7 @@ function Files({ user, previousFiles }) {
       await submitNewFile(
         newFile.name,
         newFile.type,
+        newFile.topic,
         documentURL,
         setFilesList,
         setNewFile,
@@ -82,7 +92,12 @@ function Files({ user, previousFiles }) {
         />
         <div
           className="inputGroup"
-          style={{ marginLeft: "55px", marginTop: "20px", width: "250px" }}
+          style={{
+            marginLeft: "55px",
+            marginTop: "20px",
+            width: "700px",
+            alignItems: "center",
+          }}
         >
           <Form.Group>
             <input
@@ -90,6 +105,27 @@ function Files({ user, previousFiles }) {
               onChange={handleChange}
               name="media"
               type="file"
+              style={{
+                borderColor: "black",
+                borderStyle: "solid",
+                borderWidth: "1px",
+                width: "400px",
+              }}
+            />
+            <input
+              style={{
+                marginLeft: "30px",
+                borderColor: "black",
+                borderStyle: "solid",
+                borderWidth: "1px",
+                width: "270px",
+              }}
+              value={newFile.topic}
+              name="topic"
+              onChange={handleChange}
+              // label={"Add Location"}
+              icon="clipboard outline"
+              placeholder={"Add Topic!!"}
             />
           </Form.Group>
         </div>
@@ -105,11 +141,13 @@ function Files({ user, previousFiles }) {
             </strong>
           }
           style={{
-            marginLeft: "48px",
-            backgroundColor: "#1DA1F2",
-            color: "white",
-            width: "200px",
+            marginLeft: "250px",
+            color: "black",
             height: "35px",
+            borderColor: "black",
+            borderStyle: "solid",
+            borderWidth: "1px",
+            width: "400px",
           }}
           icon="send"
           size="small"
@@ -132,13 +170,20 @@ function Files({ user, previousFiles }) {
             <>
               <Table.Row>
                 <Table.Cell>{item.fileName}</Table.Cell>
-                <Table.Cell>Topic</Table.Cell>
+                <Table.Cell>{item.fileTopic}</Table.Cell>
                 <Table.Cell>{item.fileType}</Table.Cell>
                 <Table.Cell>
                   <a href={item.fileUrl}>Download</a>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   {user.username === item.user.username ? (
-                    <Icon name="delete" color="red" />
+                    <Icon
+                      name="delete"
+                      color="red"
+                      link
+                      onClick={() =>
+                        deleteFile(item._id, setFilesList, setShowToastr)
+                      }
+                    />
                   ) : (
                     <strong></strong>
                   )}

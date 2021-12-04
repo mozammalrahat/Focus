@@ -11,18 +11,34 @@ const Axios = axios.create({
 export const submitNewFile = async (
   fileName,
   fileType,
+  fileTopic,
   fileUrl,
   setFilesList,
   setNewFile,
   setError
 ) => {
   try {
-    const res = await Axios.post("/", { fileName, fileType, fileUrl });
+    const res = await Axios.post("/", {
+      fileName,
+      fileType,
+      fileTopic,
+      fileUrl,
+    });
 
     setFilesList((prev) => [res.data, ...prev]);
     setNewFile({ name: "", type: "" });
   } catch (error) {
     const errorMsg = catchErrors(error);
     setError(errorMsg);
+  }
+};
+
+export const deleteFile = async (fileId, setFilesList, setShowToastr) => {
+  try {
+    await Axios.delete(`/${fileId}`);
+    setFilesList((prev) => prev.filter((file) => file._id !== fileId));
+    setShowToastr(true);
+  } catch (error) {
+    alert(catchErrors(error));
   }
 };
