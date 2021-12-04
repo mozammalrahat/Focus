@@ -9,6 +9,8 @@ import LikeNotification from "../../components/Notifications/LikeNotification";
 import baseUrl from "../../utils/baseUrl";
 
 function Notifications({ notifications, errorLoading, user, userFollowStats }) {
+  notifications == undefined || null ? (notifications = []) : notifications;
+
   const [loggedUserFollowStats, setUserFollowStats] = useState(userFollowStats);
 
   useEffect(() => {

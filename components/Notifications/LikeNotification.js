@@ -5,7 +5,7 @@ import calculateTime from "../../utils/calculateTime";
 function LikeNotification({ notification }) {
   const router = useRouter();
   const pathString = router.pathname.slice(0, 3);
-
+  console.log("notification-->", notification);
   return (
     <>
       <Feed.Event>

@@ -10,6 +10,8 @@ import CommentNotification from "../../components/Notifications/CommentNotificat
 import FollowerNotification from "../../components/Notifications/FollowerNotification";
 
 function Notifications({ notifications, errorLoading, user, userFollowStats }) {
+  notifications == undefined || null ? (notifications = []) : notifications;
+
   const [loggedUserFollowStats, setUserFollowStats] = useState(userFollowStats);
 
   useEffect(() => {
