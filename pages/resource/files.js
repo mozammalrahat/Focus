@@ -1,23 +1,21 @@
 import axios from "axios";
 import { parseCookies } from "nookies";
 import { useRef, useState } from "react";
-import { Button, Divider, Form, Message } from "semantic-ui-react";
+import { Button, Form, Icon, Message, Table } from "semantic-ui-react";
 import baseUrl from "../../utils/baseUrl";
 import { submitNewFile } from "../../utils/fileActions";
 import uploadDocument from "../../utils/uploadDocumentToCloudinary";
 
-function Files({ previousFiles }) {
+function Files({ user, previousFiles }) {
+  console.log(user);
   const [newFile, setNewFile] = useState({ name: "", type: "" });
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
   const [filesList, setFilesList] = useState(previousFiles || []);
 
   const [error, setError] = useState(null);
-  const [highlighted, setHighlighted] = useState(false);
 
   const [media, setMedia] = useState(null);
-
-  const [fileNameList, setFileNameList] = useState([]);
 
   const getFileNameAndType = (files) => {
     const lastdot = files[0].name.lastIndexOf(".");
@@ -31,7 +29,6 @@ function Files({ previousFiles }) {
     if (name === "media") {
       setMedia(files[0]);
     }
-    setFileNameList((prev) => [...prev, files[0].name]);
   };
 
   const addStyles = () => ({
@@ -85,7 +82,7 @@ function Files({ previousFiles }) {
         />
         <div
           className="inputGroup"
-          style={{ marginLeft: "55px", marginTop: "20px" }}
+          style={{ marginLeft: "55px", marginTop: "20px", width: "250px" }}
         >
           <Form.Group>
             <input
@@ -97,13 +94,13 @@ function Files({ previousFiles }) {
           </Form.Group>
         </div>
 
-        <Divider hidden />
+        {/* <Divider hidden /> */}
 
         <Button
           circular
           disabled={loading}
           content={
-            <strong style={{ fontSize: "20px", fontWeight: "700" }}>
+            <strong style={{ fontSize: "12px", fontWeight: "500" }}>
               Upload Document
             </strong>
           }
@@ -111,22 +108,47 @@ function Files({ previousFiles }) {
             marginLeft: "48px",
             backgroundColor: "#1DA1F2",
             color: "white",
-            width: "190px",
-            height: "55px",
+            width: "200px",
+            height: "35px",
           }}
           icon="send"
-          size="big"
+          size="small"
           loading={loading}
         />
       </Form>
-      <Divider />
-      <h1>Files Lists</h1>
-      {filesList.map((item) => (
-        <>
-          <h1>{item.fileName}</h1>
-          <h3>{item.fileUrl}</h3>
-        </>
-      ))}
+      <Table celled>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Name</Table.HeaderCell>
+            <Table.HeaderCell>Topic</Table.HeaderCell>
+            <Table.HeaderCell>File Type</Table.HeaderCell>
+            <Table.HeaderCell>Download Link</Table.HeaderCell>
+            <Table.HeaderCell>Uploaded By</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+
+        <Table.Body>
+          {filesList.map((item) => (
+            <>
+              <Table.Row>
+                <Table.Cell>{item.fileName}</Table.Cell>
+                <Table.Cell>Topic</Table.Cell>
+                <Table.Cell>{item.fileType}</Table.Cell>
+                <Table.Cell>
+                  <a href={item.fileUrl}>Download</a>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  {user.username === item.user.username ? (
+                    <Icon name="delete" color="red" />
+                  ) : (
+                    <strong></strong>
+                  )}
+                </Table.Cell>
+                <Table.Cell>{item.user.username}</Table.Cell>
+              </Table.Row>
+            </>
+          ))}
+        </Table.Body>
+      </Table>
     </>
   );
 }
