@@ -36,7 +36,7 @@ function universityIndex({ univarsityData, uniList, errorLoading }) {
   Object.keys(univarsityList).map(function (key) {
     {
       univarsityList[key].map((item) => {
-        console.log("item-->", typeof item.name);
+        // console.log("item-->", typeof item.name);
       });
     }
   });
