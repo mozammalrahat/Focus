@@ -13,7 +13,7 @@ function CommentNotification({ notification }) {
         <Feed.Content>
           <Feed.Summary>
             <>
-              <Feed.User as="a" href={`/${notification.user.username}`}>
+              <Feed.User as="a" href={`/qa/${notification.user.username}`}>
                 {notification.user.name}
               </Feed.User>{" "}
               commented on your{" "}

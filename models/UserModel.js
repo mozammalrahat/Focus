@@ -9,6 +9,8 @@ const UserSchema = new Schema(
 
     registrationNumber: { type: String, required: false, unique: true },
 
+    university: { type: String, required: false },
+
     password: { type: String, required: true, select: false },
 
     username: { type: String, required: true, unique: true, trim: true },

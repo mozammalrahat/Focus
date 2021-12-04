@@ -14,8 +14,9 @@ function PostComments({ comment, user, setComments, postId }) {
       <Comment.Group>
         <Comment>
           <Comment.Avatar src={comment.user.profilePicUrl} />
+
           <Comment.Content>
-            <Comment.Author as="a" href={`/${comment.user.username}`}>
+            <Comment.Author as="a" href={`/qa/${comment.user.username}`}>
               {comment.user.name}
             </Comment.Author>
             <Comment.Metadata>{calculateTime(comment.date)}</Comment.Metadata>

@@ -37,6 +37,8 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
 
   const [comments, setComments] = useState(post.comments);
 
+  // console.log("Inside CardPost --> comments", post.comments);
+
   const [error, setError] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
