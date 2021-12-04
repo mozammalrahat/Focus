@@ -1,7 +1,14 @@
 import axios from "axios";
 import { parseCookies } from "nookies";
 import { useEffect, useRef, useState } from "react";
-import { Button, Form, Icon, Message, Table } from "semantic-ui-react";
+import {
+  Button,
+  Container,
+  Form,
+  Icon,
+  Message,
+  Table,
+} from "semantic-ui-react";
 import baseUrl from "../../utils/baseUrl";
 import { deleteFile, submitNewFile } from "../../utils/fileActions";
 import uploadDocument from "../../utils/uploadDocumentToCloudinary";
@@ -189,7 +196,7 @@ function Files({ user, previousFiles }) {
                       }
                     />
                   ) : (
-                    <strong></strong>
+                    <></>
                   )}
                 </Table.Cell>
                 <Table.Cell>{item.user.username}</Table.Cell>
