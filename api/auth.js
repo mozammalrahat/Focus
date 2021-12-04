@@ -38,6 +38,7 @@ router.post("/", async (req, res) => {
       "+password"
     );
 
+    console.log(user);
     if (!user) {
       return res.status(401).send("Invalid Credentials");
     }
@@ -57,7 +58,6 @@ router.post("/", async (req, res) => {
     if (!notificationModel) {
       await new NotificationModel({ user: user._id, notifications: [] }).save();
     }
-
     if (!qaNotificationModel) {
       await new QANotificationModel({
         user: user._id,
