@@ -69,6 +69,7 @@ class MyApp extends App {
     const { Component, pageProps } = this.props;
 
     return (
+      
       <Layout {...pageProps}>
         <Component {...pageProps} />
       </Layout>
