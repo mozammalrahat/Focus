@@ -38,6 +38,7 @@ nextApp.prepare().then(() => {
   app.use("/api/qa/posts", require("./api/qa/posts"));
   app.use("/api/qa/qanotifications", require("./api/qa/QAnotifications"));
   app.use("/api/qa/profile", require("./api/qa/userquestions"));
+  app.use("/api/univarsity", require("./api/univarsity"));
   app.use("/api/resource/files", require("./api/resource/fileList"));
   app.all("*", (req, res) => handle(req, res));
 
