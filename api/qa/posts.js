@@ -302,8 +302,8 @@ router.post("/comment/:postId", authMiddleware, async (req, res) => {
       );
     }
 
-    console.log("New Comment");
-    console.log(newComment._id);
+    // console.log("New Comment");
+    // console.log(newComment._id);
 
     return res.status(200).json(newComment._id);
   } catch (error) {
