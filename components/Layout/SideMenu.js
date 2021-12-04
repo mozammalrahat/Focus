@@ -6,6 +6,7 @@ import { logoutUser } from "../../utils/authUser";
 
 function SideMenu({
   user: { unreadNotification, email, unreadMessage, username },
+  pc = true,
 }) {
   const router = useRouter();
 
@@ -27,23 +28,23 @@ function SideMenu({
                 <Icon
                   name="home"
                   size="large"
-                  color={isActive("/") && "teal"}
+                  color={isActive("/") && "blue"}
                 />
                 <List.Content>
-                  <List.Header content="Home" />
+                  {pc && <List.Header content="Home" />}
                 </List.Content>
               </List.Item>
             </Link>
             <br />
             <Link href="/qa">
-              <List.Item active={isActive("/")}>
+              <List.Item active={isActive("/qa")}>
                 <Icon
                   name="question circle outline"
                   size="large"
-                  color="blue"
+                  color={isActive("/qa") && "blue"}
                 />
                 <List.Content>
-                  <List.Header content="Question" />
+                  {pc && <List.Header content="Question" />}
                 </List.Content>
               </List.Item>
             </Link>
@@ -51,10 +52,14 @@ function SideMenu({
 
             <Link href="/qa/jobpostIndex">
               <List.Item active={isActive("/jobpostIndex")}>
-                <Icon name="briefcase" size="large" color="blue" />
+                <Icon
+                  name="briefcase"
+                  size="large"
+                  color={isActive("/qa/jobpostIndex") && "blue"}
+                />
 
                 <List.Content>
-                  <List.Header content="Job Posts" />
+                  {pc && <List.Header content="Job Posts" />}
                 </List.Content>
               </List.Item>
             </Link>
@@ -66,12 +71,12 @@ function SideMenu({
                   name={unreadMessage ? "hand point right" : "mail outline"}
                   size="large"
                   color={
-                    (isActive("/studentshub/messages") && "teal") ||
+                    (isActive("/studentshub/messages") && "blue") ||
                     (unreadMessage && "orange")
                   }
                 />
                 <List.Content>
-                  <List.Header content="Messages" />
+                  {pc && <List.Header content="Messages" />}
                 </List.Content>
               </List.Item>
             </Link>
@@ -89,7 +94,7 @@ function SideMenu({
                   }
                 />
                 <List.Content>
-                  <List.Header content="Notifications" />
+                  {pc && <List.Header content="Notifications" />}
                 </List.Content>
               </List.Item>
             </Link>
@@ -99,10 +104,10 @@ function SideMenu({
                 <Icon
                   name="user"
                   size="large"
-                  color={router.query.username === username && "teal"}
+                  color={isActive(`/qa/${username}`) && "blue"}
                 />
                 <List.Content>
-                  <List.Header content="Account" />
+                  {pc && <List.Header content="Account" />}
                 </List.Content>
               </List.Item>
             </Link>
@@ -115,10 +120,10 @@ function SideMenu({
                 <Icon
                   name="home"
                   size="large"
-                  color={isActive("/") && "teal"}
+                  color={isActive("/") && "blue"}
                 />
                 <List.Content>
-                  <List.Header content="Home" />
+                  {pc && <List.Header content="Home" />}
                 </List.Content>
               </List.Item>
             </Link>
@@ -126,9 +131,13 @@ function SideMenu({
 
             <Link href="/studentshub">
               <List.Item active={isActive("/")}>
-                <Icon name="group" size="large" color="blue" />
+                <Icon
+                  name="group"
+                  size="large"
+                  color={isActive("/studentshub") && "blue"}
+                />
                 <List.Content>
-                  <List.Header content="StudentHub" />
+                  {pc && <List.Header content="StudentHub" />}
                 </List.Content>
               </List.Item>
             </Link>
@@ -140,12 +149,12 @@ function SideMenu({
                   name={unreadMessage ? "hand point right" : "mail outline"}
                   size="large"
                   color={
-                    (isActive("/studentshub/messages") && "teal") ||
+                    (isActive("/studentshub/messages") && "blue") ||
                     (unreadMessage && "orange")
                   }
                 />
                 <List.Content>
-                  <List.Header content="Messages" />
+                  {pc && <List.Header content="Messages" />}
                 </List.Content>
               </List.Item>
             </Link>
@@ -163,7 +172,7 @@ function SideMenu({
                   }
                 />
                 <List.Content>
-                  <List.Header content="Notifications" />
+                  {pc && <List.Header content="Notifications" />}
                 </List.Content>
               </List.Item>
             </Link>
@@ -173,10 +182,10 @@ function SideMenu({
                 <Icon
                   name="user"
                   size="large"
-                  color={router.query.username === username && "teal"}
+                  color={router.query.username === username && "blue"}
                 />
                 <List.Content>
-                  <List.Header content="Account" />
+                  {pc && <List.Header content="Account" />}
                 </List.Content>
               </List.Item>
             </Link>
@@ -189,10 +198,10 @@ function SideMenu({
                 <Icon
                   name="home"
                   size="large"
-                  color={isActive("/") && "teal"}
+                  color={isActive("/") && "blue"}
                 />
                 <List.Content>
-                  <List.Header content="Home" />
+                  {pc && <List.Header content="Home" />}
                 </List.Content>
               </List.Item>
             </Link>
@@ -200,9 +209,13 @@ function SideMenu({
 
             <Link href="/resource">
               <List.Item active={isActive("/")}>
-                <Icon name="graduation cap" size="large" color="blue" />
+                <Icon
+                  name="graduation cap"
+                  size="large"
+                  color={isActive("/resource") && "blue"}
+                />
                 <List.Content>
-                  <List.Header content="Scholarships" />
+                  {pc && <List.Header content="Scholarships" />}
                 </List.Content>
               </List.Item>
             </Link>
@@ -210,18 +223,26 @@ function SideMenu({
 
             <Link href="/resource/files">
               <List.Item active={isActive("/")}>
-                <Icon name="newspaper outline" size="large" color="blue" />
+                <Icon
+                  name="newspaper outline"
+                  size="large"
+                  color={isActive("/resource/files") && "blue"}
+                />
                 <List.Content>
-                  <List.Header content="ResourceHub" />
+                  {pc && <List.Header content="ResourceHub" />}
                 </List.Content>
               </List.Item>
             </Link>
             <br />
             <Link href="/resource/universityIndex">
               <List.Item active={isActive("/")}>
-                <Icon name="university" size="large" color="blue" />
+                <Icon
+                  name="university"
+                  size="large"
+                  color={isActive("/resource/universityIndex") && "blue"}
+                />
                 <List.Content>
-                  <List.Header content="Universities" />
+                  {pc && <List.Header content="Universities" />}
                 </List.Content>
               </List.Item>
             </Link>
@@ -232,12 +253,12 @@ function SideMenu({
                   name={unreadMessage ? "hand point right" : "mail outline"}
                   size="large"
                   color={
-                    (isActive("/studentshub/messages") && "teal") ||
+                    (isActive("/studentshub/messages") && "blue") ||
                     (unreadMessage && "orange")
                   }
                 />
                 <List.Content>
-                  <List.Header content="Messages" />
+                  {pc && <List.Header content="Messages" />}
                 </List.Content>
               </List.Item>
             </Link>
@@ -250,12 +271,12 @@ function SideMenu({
                   }
                   size="large"
                   color={
-                    (isActive("/notifications") && "teal") ||
+                    (isActive("/notifications") && "blue") ||
                     (unreadNotification && "red")
                   }
                 />
                 <List.Content>
-                  <List.Header content="Notifications" />
+                  {pc && <List.Header content="Notifications" />}
                 </List.Content>
               </List.Item>
             </Link>
@@ -265,10 +286,10 @@ function SideMenu({
                 <Icon
                   name="user"
                   size="large"
-                  color={router.query.username === username && "teal"}
+                  color={router.query.username === username && "blue"}
                 />
                 <List.Content>
-                  <List.Header content="Account" />
+                  {pc && <List.Header content="Account" />}
                 </List.Content>
               </List.Item>
             </Link>
@@ -278,9 +299,7 @@ function SideMenu({
 
         <List.Item onClick={() => logoutUser(email)}>
           <Icon name="log out" size="large" />
-          <List.Content>
-            <List.Header content="Logout" />
-          </List.Content>
+          <List.Content>{pc && <List.Header content="Logout" />}</List.Content>
         </List.Item>
       </List>
     </>
