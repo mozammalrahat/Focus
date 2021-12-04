@@ -106,7 +106,7 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
                     icon="trash"
                     content="Delete"
                     onClick={() =>
-                      pathString === "/qa"
+                      pathString === "/qa" || pathString === "/resource"
                         ? deleteQuestion(post._id, setPosts, setShowToastr)
                         : deletePost(post._id, setPosts, setShowToastr)
                     }

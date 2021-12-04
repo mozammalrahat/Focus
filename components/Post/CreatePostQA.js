@@ -22,7 +22,7 @@ function CreatePostQA({ user, setPosts }) {
   const [newPost, setNewPost] = useState({
     text: "",
     topic: "",
-    qa_toggle: "",
+    qa_toggle: "resource",
   });
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
@@ -85,171 +85,306 @@ function CreatePostQA({ user, setPosts }) {
 
   return (
     <>
-      <Form error={error !== null} onSubmit={handleSubmit}>
-        <Message
-          error
-          onDismiss={() => setError(null)}
-          content={error}
-          header="Oops!"
-        />
-
-        <Form.Group>
-          <Image
-            className="propicIcon"
-            floated="left"
-            src={user.profilePicUrl}
-            avatar
-            circular
-            style={{ width: "3em", height: "3em" }}
-          />
-          <Form.TextArea
-            className="postTextArea"
-            placeholder={"Ask a Question?"}
-            name="text"
-            style={{
-              borderColor: "black",
-              borderStyle: "solid",
-              borderWidth: "1px",
-            
-            }}
-            value={newPost.text}
-            onChange={handleChange}
-            rows={4}
-            width={14}
-          />
-        </Form.Group>
-
-        <div
-          className="inputGroup"
-          style={{ marginLeft: "55px", marginTop: "20px" }}
-        >
-          <Form.Group
-            style={{
-              fontSize: "16px",
-              fontWeight: "600",
-              letterSpacing: "0.1px",
-              color: "black",
-            }}
-          >
-            <Form.Field>Post Type:</Form.Field>
-            <Form.Field>
-              <Checkbox
-                label="Ask Question"
-                name="checkboxRadioGroup"
-                value="Question"
-                // checked={newPost.qa === "Question"}
-                onChange={(e) => {
-                  e.preventDefault();
-                  newPost.qa_toggle = "Question";
-                }}
-              />
-            </Form.Field>
-            <Form.Field>
-              <Checkbox
-                label="Post JobPost"
-                name="checkboxRadioGroup"
-                value="JobPost"
-                onChange={(e) => {
-                  e.preventDefault();
-                  newPost.qa_toggle = "JobPost";
-                }}
-                // checked={newPost.qa === "JobPost"}
-              />
-            </Form.Field>
-          </Form.Group>
-
-          <Form.Group
-            style={{
-              fontSize: "16px",
-              fontWeight: "600",
-              letterSpacing: "0.1px",
-              color: "black",
-            }}
-          >
-            <Form.Input
-              style={{
-                borderColor: "black",
-                borderStyle: "solid",
-                borderWidth: "1px",
-              }}
-              value={newPost.topic}
-              name="topic"
-              onChange={handleChange}
-              // label={"Add Topic"}
-              icon="clipboard outline"
-              placeholder={"Add Topic"}
+      {pathString === "/resource" ? (
+        <>
+          <Form error={error !== null} onSubmit={handleSubmit}>
+            <Message
+              error
+              onDismiss={() => setError(null)}
+              content={error}
+              header="Oops!"
             />
 
-            <input
-              ref={inputRef}
-              onChange={handleChange}
-              name="media"
-              style={{ display: "none" }}
-              type="file"
-              accept="image/*"
-            />
-          </Form.Group>
-        </div>
-
-        <div
-          onClick={() => inputRef.current.click()}
-          style={addStyles()}
-          onDrag={(e) => {
-            e.preventDefault();
-            setHighlighted(true);
-          }}
-          onDragLeave={(e) => {
-            e.preventDefault();
-            setHighlighted(false);
-          }}
-          onDrop={(e) => {
-            e.preventDefault();
-            setHighlighted(true);
-
-            const droppedFile = Array.from(e.dataTransfer.files);
-
-            setMedia(droppedFile[0]);
-            setMediaPreview(URL.createObjectURL(droppedFile[0]));
-          }}
-        >
-          {media === null ? (
-            <Icon name="plus" size="big" />
-          ) : (
-            <>
+            <Form.Group>
               <Image
-                className="imagefileInput"
-                style={{ height: "150px" }}
-                src={mediaPreview}
-                alt="PostImage"
-                centered
-                size="medium"
+                className="propicIcon"
+                floated="left"
+                src={user.profilePicUrl}
+                avatar
+                circular
+                style={{ width: "3em", height: "3em" }}
               />
-            </>
-          )}
-        </div>
-        <Divider hidden />
+              <Form.TextArea
+                className="postTextArea"
+                placeholder={"Post Scholarships News"}
+                name="text"
+                style={{
+                  borderColor: "black",
+                  borderStyle: "solid",
+                  borderWidth: "1px",
+                }}
+                value={newPost.text}
+                onChange={handleChange}
+                rows={4}
+                width={14}
+              />
+            </Form.Group>
 
-        <Button
-          circular
-          disabled={newPost.text === "" || loading}
-          content={
-            <strong style={{ fontSize: "20px", fontWeight: "700" }}>
-              Post
-            </strong>
-          }
-          style={{
-            marginLeft: "48px",
-            backgroundColor: "#1DA1F2",
-            color: "white",
-            width: "190px",
-            height: "55px",
-          }}
-          icon="send"
-          size="big"
-          loading={loading}
-        />
-      </Form>
-      <Divider />
+            <div
+              className="inputGroup"
+              style={{ marginLeft: "55px", marginTop: "20px" }}
+            >
+              <Form.Group
+                style={{
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  letterSpacing: "0.1px",
+                  color: "black",
+                }}
+              >
+                <Form.Input
+                  style={{
+                    borderColor: "black",
+                    borderStyle: "solid",
+                    borderWidth: "1px",
+                  }}
+                  value={newPost.topic}
+                  name="topic"
+                  onChange={handleChange}
+                  // label={"Add Topic"}
+                  icon="graduation cap"
+                  placeholder={"Scholarships Type"}
+                />
+
+                <input
+                  ref={inputRef}
+                  onChange={handleChange}
+                  name="media"
+                  style={{ display: "none" }}
+                  type="file"
+                  accept="image/*"
+                />
+              </Form.Group>
+            </div>
+
+            <div
+              onClick={() => inputRef.current.click()}
+              style={addStyles()}
+              onDrag={(e) => {
+                e.preventDefault();
+                setHighlighted(true);
+              }}
+              onDragLeave={(e) => {
+                e.preventDefault();
+                setHighlighted(false);
+              }}
+              onDrop={(e) => {
+                e.preventDefault();
+                setHighlighted(true);
+
+                const droppedFile = Array.from(e.dataTransfer.files);
+
+                setMedia(droppedFile[0]);
+                setMediaPreview(URL.createObjectURL(droppedFile[0]));
+              }}
+            >
+              {media === null ? (
+                <Icon name="plus" size="big" />
+              ) : (
+                <>
+                  <Image
+                    className="imagefileInput"
+                    style={{ height: "150px" }}
+                    src={mediaPreview}
+                    alt="PostImage"
+                    centered
+                    size="medium"
+                  />
+                </>
+              )}
+            </div>
+            <Divider hidden />
+
+            <Button
+              circular
+              disabled={newPost.text === "" || loading}
+              content={
+                <strong style={{ fontSize: "20px", fontWeight: "700" }}>
+                  Post
+                </strong>
+              }
+              style={{
+                marginLeft: "48px",
+                backgroundColor: "#1DA1F2",
+                color: "white",
+                width: "190px",
+                height: "55px",
+              }}
+              icon="send"
+              size="big"
+              loading={loading}
+            />
+          </Form>
+          <Divider />
+        </>
+      ) : (
+        <>
+          <Form error={error !== null} onSubmit={handleSubmit}>
+            <Message
+              error
+              onDismiss={() => setError(null)}
+              content={error}
+              header="Oops!"
+            />
+
+            <Form.Group>
+              <Image
+                className="propicIcon"
+                floated="left"
+                src={user.profilePicUrl}
+                avatar
+                circular
+                style={{ width: "3em", height: "3em" }}
+              />
+              <Form.TextArea
+                className="postTextArea"
+                placeholder={"Ask a Question?"}
+                name="text"
+                style={{
+                  borderColor: "black",
+                  borderStyle: "solid",
+                  borderWidth: "1px",
+                }}
+                value={newPost.text}
+                onChange={handleChange}
+                rows={4}
+                width={14}
+              />
+            </Form.Group>
+
+            <div
+              className="inputGroup"
+              style={{ marginLeft: "55px", marginTop: "20px" }}
+            >
+              <Form.Group
+                style={{
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  letterSpacing: "0.1px",
+                  color: "black",
+                }}
+              >
+                <Form.Field>Post Type:</Form.Field>
+                <Form.Field>
+                  <Checkbox
+                    label="Ask Question"
+                    name="checkboxRadioGroup"
+                    value="Questions"
+                    // checked={newPost.qa === "Question"}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      newPost.qa_toggle = "Questions";
+                    }}
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Checkbox
+                    label="Post JobPost"
+                    name="checkboxRadioGroup"
+                    value="JobPost"
+                    onChange={(e) => {
+                      e.preventDefault();
+                      newPost.qa_toggle = "JobPost";
+                    }}
+                    // checked={newPost.qa === "JobPost"}
+                  />
+                </Form.Field>
+              </Form.Group>
+
+              <Form.Group
+                style={{
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  letterSpacing: "0.1px",
+                  color: "black",
+                }}
+              >
+                <Form.Input
+                  style={{
+                    borderColor: "black",
+                    borderStyle: "solid",
+                    borderWidth: "1px",
+                  }}
+                  value={newPost.topic}
+                  name="topic"
+                  onChange={handleChange}
+                  // label={"Add Topic"}
+                  icon="clipboard outline"
+                  placeholder={"Add Topic"}
+                />
+
+                <input
+                  ref={inputRef}
+                  onChange={handleChange}
+                  name="media"
+                  style={{ display: "none" }}
+                  type="file"
+                  accept="image/*"
+                />
+              </Form.Group>
+            </div>
+
+            <div
+              onClick={() => inputRef.current.click()}
+              style={addStyles()}
+              onDrag={(e) => {
+                e.preventDefault();
+                setHighlighted(true);
+              }}
+              onDragLeave={(e) => {
+                e.preventDefault();
+                setHighlighted(false);
+              }}
+              onDrop={(e) => {
+                e.preventDefault();
+                setHighlighted(true);
+
+                const droppedFile = Array.from(e.dataTransfer.files);
+
+                setMedia(droppedFile[0]);
+                setMediaPreview(URL.createObjectURL(droppedFile[0]));
+              }}
+            >
+              {media === null ? (
+                <Icon name="plus" size="big" />
+              ) : (
+                <>
+                  <Image
+                    className="imagefileInput"
+                    style={{ height: "150px" }}
+                    src={mediaPreview}
+                    alt="PostImage"
+                    centered
+                    size="medium"
+                  />
+                </>
+              )}
+            </div>
+            <Divider hidden />
+
+            <Button
+              circular
+              disabled={newPost.text === "" || loading}
+              content={
+                <strong style={{ fontSize: "20px", fontWeight: "700" }}>
+                  Post
+                </strong>
+              }
+              style={{
+                marginLeft: "48px",
+                backgroundColor: "#1DA1F2",
+                color: "white",
+                width: "190px",
+                height: "55px",
+              }}
+              icon="send"
+              size="big"
+              loading={loading}
+            />
+          </Form>
+          <Divider />
+        </>
+      )}
     </>
   );
 }
