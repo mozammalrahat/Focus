@@ -148,13 +148,17 @@ function Files({ user, previousFiles }) {
             borderStyle: "solid",
             borderWidth: "1px",
             width: "400px",
+            height: "50px",
+            backgroundColor: "#c4e6f3",
+            marginTop: "10px",
+            marginBottom: "40px",
           }}
           icon="send"
           size="small"
           loading={loading}
         />
       </Form>
-      <Table celled>
+      <Table celled style={{ borderColor: "black" }}>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Name</Table.HeaderCell>
