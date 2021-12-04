@@ -1,7 +1,6 @@
 import axios from "axios";
 import cookie from "js-cookie";
-import Router from "next/router";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import React, { useState } from "react";
 import { Image, List, Search } from "semantic-ui-react";
 import baseUrl from "../../utils/baseUrl";
@@ -36,7 +35,7 @@ function SearchComponent() {
 
       setResults(res.data);
     } catch (error) {
-      alert("Error Searching");
+      // alert("Error Searching");
     }
 
     setLoading(false);
