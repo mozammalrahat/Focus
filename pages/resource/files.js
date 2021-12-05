@@ -183,7 +183,8 @@ function Files({ user, previousFiles }) {
                     Download
                   </a>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  {user.username === item.user.username ? (
+                  {user.username === item.user.username ||
+                  user.role === "root" ? (
                     <Icon
                       name="delete"
                       color="red"
