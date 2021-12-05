@@ -28,7 +28,7 @@ nextApp.prepare().then(() => {
 
     next();
   });
-  app.use("/api/signup", require("./components/signup"));
+  app.use("/api/signup", require("./api/signup"));
   app.use("/api/auth", require("./api/auth"));
   app.use("/api/search", require("./api/search"));
   app.use("/api/posts", require("./api/posts"));
