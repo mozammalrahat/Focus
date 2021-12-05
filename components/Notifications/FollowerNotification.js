@@ -8,7 +8,6 @@ function FollowerNotification({
   loggedUserFollowStats,
   setUserFollowStats,
 }) {
-  notification == undefined || null ? "" : notification;
   const [disabled, setDisabled] = useState(false);
 
   const isFollowing =
