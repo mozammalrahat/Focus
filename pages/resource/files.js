@@ -179,7 +179,9 @@ function Files({ user, previousFiles }) {
                 <Table.Cell>{item.fileTopic}</Table.Cell>
                 <Table.Cell>{item.fileType}</Table.Cell>
                 <Table.Cell>
-                  <a href={item.fileUrl}>Download</a>
+                  <a href={item.fileUrl.replace("http://", "https://")}>
+                    Download
+                  </a>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   {user.username === item.user.username ? (
                     <Icon
