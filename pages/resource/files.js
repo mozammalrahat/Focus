@@ -151,6 +151,8 @@ function Files({ user, previousFiles }) {
               borderStyle: "solid",
               borderWidth: "1px",
               width: "auto",
+              height: "auto",
+              backgroundColor: "#c4e6f3",
             }}
             icon="send"
             size="small"
