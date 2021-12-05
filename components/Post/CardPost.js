@@ -52,6 +52,7 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
     comments,
     setComments,
   });
+  // console.log("Inside CardPost --> post", pathString);
 
   return (
     <>
@@ -106,9 +107,9 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
                     icon="trash"
                     content="Delete"
                     onClick={() =>
-                      pathString === "/qa" || pathString === "/resource"
-                        ? deleteQuestion(post._id, setPosts, setShowToastr)
-                        : deletePost(post._id, setPosts, setShowToastr)
+                      pathString === "/studentshub"
+                        ? deletePost(post._id, setPosts, setShowToastr)
+                        : deleteQuestion(post._id, setPosts, setShowToastr)
                     }
                   />
                 </Popup>
@@ -124,15 +125,15 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
                 color: "black",
               }}
             >
-              {pathString === "/qa" ? (
+              {pathString === "/studentshub" ? (
                 <>
-                  <Link href={`/qa/${post.user.username}`}>
+                  <Link href={`/studentshub/${post.user.username}`}>
                     <a>{post.user.name}</a>
                   </Link>
                 </>
               ) : (
                 <>
-                  <Link href={`/studentshub/${post.user.username}`}>
+                  <Link href={`/qa/${post.user.username}`}>
                     <a>{post.user.name}</a>
                   </Link>
                 </>
@@ -201,16 +202,14 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
               size="large"
               style={{ cursor: "pointer" }}
               onClick={() =>
-                pathString === "/qa" ||
-                pathString === "/resource" ||
-                pathString === "/qa/jobpostIndex"
-                  ? likeQuestion(
+                pathString === "/studentshub"
+                  ? likePost(
                       post._id,
                       user._id,
                       setLikes,
                       isLiked ? false : true
                     )
-                  : likePost(
+                  : likeQuestion(
                       post._id,
                       user._id,
                       setLikes,
@@ -228,7 +227,7 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
                     ${
                       pathString === "/qa" ||
                       pathString === "/resource" ||
-                      pathString === "qa/jobpostIndex"
+                      pathString === "/qa/jobpostIndex"
                         ? likes.length === 1
                           ? "vote"
                           : "votes"
