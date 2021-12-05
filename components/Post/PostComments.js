@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import { Comment, Icon } from "semantic-ui-react";
 import calculateTime from "../../utils/calculateTime";
 import { deleteComment as deleteAnswer } from "../../utils/qaActions";
+import { deleteComment as deleteComment } from "../../utils/postActions";
 
 function PostComments({ comment, user, setComments, postId }) {
   const router = useRouter();
-  const pathString = router.pathname.slice(0, 3);
+  const pathString = router.pathname;
   const [disabled, setDisabled] = useState(false);
 
   return (
@@ -32,9 +33,9 @@ function PostComments({ comment, user, setComments, postId }) {
                     name="trash"
                     onClick={async () => {
                       setDisabled(true);
-                      pathString === "/qa"
-                        ? await deleteAnswer(postId, comment._id, setComments)
-                        : await deletePost(postId, comment._id, setComments);
+                      pathString === "/studentshub"
+                        ? await deleteComment(postId, comment._id, setComments)
+                        : await deleteAnswer(postId, comment._id, setComments);
                       setDisabled(false);
                     }}
                   />
