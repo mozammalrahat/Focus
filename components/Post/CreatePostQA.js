@@ -23,7 +23,7 @@ function CreatePostQA({ user, setPosts }) {
   const [newPost, setNewPost] = useState({
     text: "",
     topic: "",
-    qa_toggle: "Questions",
+    qa_toggle: "",
   });
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
@@ -261,40 +261,19 @@ function CreatePostQA({ user, setPosts }) {
               className="inputGroup"
               style={{ marginLeft: "55px", marginTop: "20px" }}
             >
-              <Form.Group
-                style={{
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  letterSpacing: "0.1px",
-                  color: "black",
-                }}
-              >
-                <Form.Field>Post Type:</Form.Field>
-                <Form.Field>
-                  <Checkbox
-                    label="Ask Question"
-                    name="checkboxRadioGroup"
-                    value="Questions"
-                    // checked={newPost.qa === "Question"}
-                    onChange={(e) => {
-                      e.preventDefault();
-                      newPost.qa_toggle = "Questions";
-                    }}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <Checkbox
-                    label="Post JobPost"
-                    name="checkboxRadioGroup"
-                    value="JobPost"
-                    onChange={(e) => {
-                      e.preventDefault();
-                      newPost.qa_toggle = "JobPost";
-                    }}
-                    // checked={newPost.qa === "JobPost"}
-                  />
-                </Form.Field>
-              </Form.Group>
+              {pathString === "/qa" ? (
+                <>
+                  <h6 style={{ color: "white", margin: "-5px" }}>
+                    {(newPost.qa_toggle = "Questions")}{" "}
+                  </h6>
+                </>
+              ) : (
+                <>
+                  <h6 style={{ color: "white", margin: "-5px" }}>
+                    {(newPost.qa_toggle = "JobPost")}{" "}
+                  </h6>
+                </>
+              )}
 
               <Form.Group
                 style={{
