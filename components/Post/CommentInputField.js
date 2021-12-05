@@ -14,9 +14,9 @@ function CommentInputField({ postId, user, setComments }) {
       onSubmit={async (e) => {
         e.preventDefault();
         setLoading(true);
-        pathString === "/qa"
-          ? await postAnswer(postId, user, text, setComments, setText)
-          : await postComment(postId, user, text, setComments, setText);
+        pathString === "/studentshub"
+          ? await postComment(postId, user, text, setComments, setText)
+          : await postAnswer(postId, user, text, setComments, setText);
 
         setLoading(false);
       }}
