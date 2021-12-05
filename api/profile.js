@@ -69,7 +69,6 @@ router.get(`/posts/:username`, authMiddleware, async (req, res) => {
   }
 });
 
-
 // GET FOLLOWERS OF USER
 router.get("/followers/:userId", authMiddleware, async (req, res) => {
   try {
@@ -200,7 +199,7 @@ router.post("/update", authMiddleware, async (req, res) => {
       req.body;
 
     let profileFields = {};
-    profileFields.user = user._id;
+    profileFields.user = userId;
 
     profileFields.bio = bio;
 
