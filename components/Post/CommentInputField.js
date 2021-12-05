@@ -8,7 +8,7 @@ function CommentInputField({ postId, user, setComments }) {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const pathString = router.pathname.slice(0, 3);
+  const pathString = router.pathname;
   return (
     <Form
       onSubmit={async (e) => {
@@ -24,7 +24,9 @@ function CommentInputField({ postId, user, setComments }) {
       <Form.Input
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder={pathString === "/qa" ? "Answer Please!!" : "Add Comment"}
+        placeholder={
+          pathString === "/studentshub" ? "Add Comment" : "Answer Please!!"
+        }
         action={{
           color: "blue",
           icon: "edit",
