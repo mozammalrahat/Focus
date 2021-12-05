@@ -179,7 +179,7 @@ function Files({ user, previousFiles }) {
                 <Table.Cell>{item.fileTopic}</Table.Cell>
                 <Table.Cell>{item.fileType}</Table.Cell>
                 <Table.Cell>
-                  <a href={item.fileUrl.replace("http://", "https://")}>
+                  <a href={item.fileUrl.replace("http://", "https://secure.")}>
                     Download
                   </a>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
