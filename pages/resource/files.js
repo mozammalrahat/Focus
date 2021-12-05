@@ -1,14 +1,7 @@
 import axios from "axios";
 import { parseCookies } from "nookies";
 import { useEffect, useRef, useState } from "react";
-import {
-  Button,
-  Container,
-  Form,
-  Icon,
-  Message,
-  Table,
-} from "semantic-ui-react";
+import { Button, Divider, Form, Icon, Message, Table } from "semantic-ui-react";
 import baseUrl from "../../utils/baseUrl";
 import { deleteFile, submitNewFile } from "../../utils/fileActions";
 import uploadDocument from "../../utils/uploadDocumentToCloudinary";
@@ -102,70 +95,70 @@ function Files({ user, previousFiles }) {
           style={{
             marginLeft: "55px",
             marginTop: "20px",
-            width: "700px",
+            width: "auto",
             alignItems: "center",
           }}
         >
-          <Form.Group>
-            <input
-              ref={inputRef}
-              onChange={handleChange}
-              name="media"
-              type="file"
-              style={{
-                borderColor: "black",
-                borderStyle: "solid",
-                borderWidth: "1px",
-                width: "400px",
-              }}
-            />
-            <input
-              style={{
-                marginLeft: "30px",
-                borderColor: "black",
-                borderStyle: "solid",
-                borderWidth: "1px",
-                width: "270px",
-              }}
-              value={newFile.topic}
-              name="topic"
-              onChange={handleChange}
-              // label={"Add Location"}
-              icon="clipboard outline"
-              placeholder={"Add Topic!!"}
-            />
+          <Form.Group widths="equal">
+            <Form.Field>
+              <input
+                ref={inputRef}
+                onChange={handleChange}
+                name="media"
+                type="file"
+                style={{
+                  borderColor: "black",
+                  borderStyle: "solid",
+                  borderWidth: "1px",
+                }}
+              />
+            </Form.Field>
+
+            <Divider horizontal hidden />
+            <Form.Field>
+              <input
+                style={{
+                  borderColor: "black",
+                  borderStyle: "solid",
+                  borderWidth: "1px",
+                }}
+                value={newFile.topic}
+                name="topic"
+                onChange={handleChange}
+                icon="clipboard outline"
+                placeholder={"Add Topic!!"}
+              />
+            </Form.Field>
           </Form.Group>
         </div>
 
         {/* <Divider hidden /> */}
 
-        <Button
-          circular
-          disabled={loading}
-          content={
-            <strong style={{ fontSize: "12px", fontWeight: "500" }}>
-              Upload Document
-            </strong>
-          }
-          style={{
-            marginLeft: "250px",
-            color: "black",
-            height: "35px",
-            borderColor: "black",
-            borderStyle: "solid",
-            borderWidth: "1px",
-            width: "400px",
-            height: "50px",
-            backgroundColor: "#c4e6f3",
-            marginTop: "10px",
-            marginBottom: "40px",
-          }}
-          icon="send"
-          size="small"
-          loading={loading}
-        />
+        <Form.Field>
+          <Button
+            circular
+            disabled={loading}
+            content={
+              <strong style={{ fontSize: "12px", fontWeight: "500" }}>
+                Upload Document
+              </strong>
+            }
+            style={{
+              marginLeft: "55px",
+              color: "black",
+              height: "35px",
+              borderColor: "black",
+              borderStyle: "solid",
+              borderWidth: "1px",
+              width: "auto",
+            }}
+            icon="send"
+            size="small"
+            loading={loading}
+          />
+        </Form.Field>
       </Form>
-      <Table celled style={{ borderColor: "black" }}>
+      <Table stackable celled textAlign="center">
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Name</Table.HeaderCell>

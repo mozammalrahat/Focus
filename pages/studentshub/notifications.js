@@ -3,11 +3,11 @@ import cookie from "js-cookie";
 import { parseCookies } from "nookies";
 import React, { useEffect, useState } from "react";
 import { Container, Divider, Feed, Segment } from "semantic-ui-react";
-import LikeNotification from "../../components/Notifications/LikeNotification";
-import baseUrl from "../../utils/baseUrl";
 import { NoNotifications } from "../../components/Layout/NoData";
 import CommentNotification from "../../components/Notifications/CommentNotification";
 import FollowerNotification from "../../components/Notifications/FollowerNotification";
+import LikeNotification from "../../components/Notifications/LikeNotification";
+import baseUrl from "../../utils/baseUrl";
 
 function Notifications({ notifications, errorLoading, user, userFollowStats }) {
   notifications == undefined || null ? (notifications = []) : notifications;
@@ -29,6 +29,8 @@ function Notifications({ notifications, errorLoading, user, userFollowStats }) {
 
     notificationRead();
   }, []);
+
+  // console.log(notifications);
 
   return (
     <>
