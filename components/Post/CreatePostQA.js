@@ -8,6 +8,7 @@ import {
   Image,
   Message,
   Checkbox,
+  Segment,
 } from "semantic-ui-react";
 // import { submitNewPost } from "../../utils/postActions";
 import { submitNewPost as submitNewQuestion } from "../../utils/qaActions";
@@ -22,7 +23,7 @@ function CreatePostQA({ user, setPosts }) {
   const [newPost, setNewPost] = useState({
     text: "",
     topic: "",
-    qa_toggle: "resource",
+    qa_toggle: "Questions",
   });
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
@@ -124,6 +125,10 @@ function CreatePostQA({ user, setPosts }) {
               className="inputGroup"
               style={{ marginLeft: "55px", marginTop: "20px" }}
             >
+              <h6 style={{ color: "white", margin: "-5px" }}>
+                {(newPost.qa_toggle = "resource")}{" "}
+              </h6>
+
               <Form.Group
                 style={{
                   fontSize: "16px",
