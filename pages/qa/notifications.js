@@ -89,8 +89,8 @@ Notifications.getInitialProps = async (ctx) => {
     const res = await axios.get(`${baseUrl}/api/qa/qanotifications`, {
       headers: { Authorization: token },
     });
-    console.log("Notification Lists");
-    console.log(res.data);
+    // console.log("Notification Lists");
+    // console.log(res.data);
     return { notifications: res.data };
   } catch (error) {
     return { errorLoading: true };

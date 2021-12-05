@@ -38,7 +38,7 @@ router.post("/", async (req, res) => {
       "+password"
     );
 
-    console.log(user);
+    // console.log(user);
     if (!user) {
       return res.status(401).send("Invalid Credentials");
     }
