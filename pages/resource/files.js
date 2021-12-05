@@ -189,7 +189,7 @@ function Files({ user, previousFiles }) {
                       }
                     />
                   ) : (
-                    <strong></strong>
+                    <></>
                   )}
                 </Table.Cell>
                 <Table.Cell>{item.user.username}</Table.Cell>

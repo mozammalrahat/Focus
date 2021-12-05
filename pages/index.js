@@ -26,8 +26,8 @@ function Home({ user }) {
             color="red"
             style={{
               position: "absolute",
-              top: "30px",
-              right: "40px",
+              top: "20px",
+              right: "10px",
               fontSize: "22px",
               height: "55px",
               width: "140px",
@@ -65,6 +65,7 @@ function Home({ user }) {
                 backgroundColor: "#c4e6f3",
                 height: "100px",
                 borderRadius: "20px",
+                width: "460px",
               }}
               inverted
               onClick={() => handleLink("qa/")}
@@ -91,6 +92,7 @@ function Home({ user }) {
                 backgroundColor: "#c4e6f3",
                 height: "100px",
                 borderRadius: "20px",
+                width: "460px",
               }}
               inverted
               onClick={() => handleLink("studentshub/")}
@@ -117,6 +119,7 @@ function Home({ user }) {
                 backgroundColor: "#c4e6f3",
                 height: "100px",
                 borderRadius: "20px",
+                width: "460px",
               }}
               inverted
               onClick={() => handleLink("resource/")}

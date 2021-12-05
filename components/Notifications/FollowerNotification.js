@@ -6,14 +6,15 @@ import { followUser, unfollowUser } from "../../utils/profileActions";
 function FollowerNotification({
   notification,
   loggedUserFollowStats,
-  setUserFollowStats
+  setUserFollowStats,
 }) {
+  notification == undefined || null ? "" : notification;
   const [disabled, setDisabled] = useState(false);
 
   const isFollowing =
     loggedUserFollowStats.following.length > 0 &&
     loggedUserFollowStats.following.filter(
-      following => following.user === notification.user._id
+      (following) => following.user === notification.user._id
     ).length > 0;
 
   return (
@@ -42,7 +43,10 @@ function FollowerNotification({
                 setDisabled(true);
 
                 isFollowing
-                  ? await unfollowUser(notification.user._id, setUserFollowStats)
+                  ? await unfollowUser(
+                      notification.user._id,
+                      setUserFollowStats
+                    )
                   : await followUser(notification.user._id, setUserFollowStats);
 
                 setDisabled(false);

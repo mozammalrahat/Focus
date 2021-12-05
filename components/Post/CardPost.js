@@ -201,7 +201,9 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
               size="large"
               style={{ cursor: "pointer" }}
               onClick={() =>
-                pathString === "/qa"
+                pathString === "/qa" ||
+                pathString === "/resource" ||
+                pathString === "/qa/jobpostIndex"
                   ? likeQuestion(
                       post._id,
                       user._id,
@@ -224,7 +226,9 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
                   <span className="spanLikesList">
                     {`${likes.length}
                     ${
-                      pathString === "/qa"
+                      pathString === "/qa" ||
+                      pathString === "/resource" ||
+                      pathString === "qa/jobpostIndex"
                         ? likes.length === 1
                           ? "vote"
                           : "votes"
