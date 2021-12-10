@@ -177,6 +177,62 @@ function MobileHeader({
                 </Dropdown.Menu>
               </Dropdown>
             </>
+          ) : pathString === "/me" ? (
+            <>
+              <Link href="/">
+                <Menu.Item active={isActive("/")}>
+                  <Icon
+                    name="home"
+                    size="large"
+                    color={isActive("/") && "blue"}
+                  />
+                </Menu.Item>
+              </Link>
+              <br />
+
+              <Link href="/resource">
+                <Menu.Item active={isActive("/resource")}>
+                  <Icon
+                    name="graduation cap"
+                    size="large"
+                    color={isActive("/resource") && "blue"}
+                  />
+                </Menu.Item>
+              </Link>
+              <br />
+
+              <Link href="/studentshub">
+                <Menu.Item active={isActive("/studentshub")}>
+                  <Icon
+                    name="newspaper outline"
+                    size="large"
+                    color={isActive("/studentshub") && "blue"}
+                  />
+                </Menu.Item>
+              </Link>
+              <br />
+              <Link href="/qa">
+                <Menu.Item active={isActive("/qa")}>
+                  <Icon
+                    name="question circle outline"
+                    size="large"
+                    color={
+                      (isActive("/qa") && "blue") ||
+                      (unreadNotification && "red")
+                    }
+                  />
+                </Menu.Item>
+              </Link>
+              <br />
+              <Dropdown item icon="bars" direction="left">
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => logoutUser(email)}>
+                    <Icon name="sign out alternate" size="large" />
+                    Logout
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </>
           ) : (
             <>
               <Link href="/resource">

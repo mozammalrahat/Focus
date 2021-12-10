@@ -65,7 +65,7 @@ function SideMenu({
             </Link>
             <br />
 
-            <Link href="#">
+            <Link href="/messages">
               <List.Item active={isActive("/messages")}>
                 <Icon
                   name={unreadMessage ? "hand point right" : "mail outline"}
@@ -143,7 +143,7 @@ function SideMenu({
             </Link>
             <br />
 
-            <Link href="#">
+            <Link href="/messages">
               <List.Item active={isActive("/messages")}>
                 <Icon
                   name={unreadMessage ? "hand point right" : "mail outline"}
@@ -186,6 +186,65 @@ function SideMenu({
                 />
                 <List.Content>
                   {pc && <List.Header content="Account" />}
+                </List.Content>
+              </List.Item>
+            </Link>
+            <br />
+          </>
+        ) : pathString === "/me" ? (
+          <>
+            <Link href="/">
+              <List.Item active={isActive("/")}>
+                <Icon
+                  name="home"
+                  size="large"
+                  color={isActive("/") && "blue"}
+                />
+                <List.Content>
+                  {pc && <List.Header content="Home" />}
+                </List.Content>
+              </List.Item>
+            </Link>
+            <br />
+
+            <Link href="/resource">
+              <List.Item active={isActive("/")}>
+                <Icon
+                  name="graduation cap"
+                  size="large"
+                  color={isActive("/resource") && "blue"}
+                />
+                <List.Content>
+                  {pc && <List.Header content="Higher Study & Resources" />}
+                </List.Content>
+              </List.Item>
+            </Link>
+            <br />
+
+            <Link href="/studentshub">
+              <List.Item active={isActive("/studentshub")}>
+                <Icon
+                  name="newspaper outline"
+                  size="large"
+                  color={isActive("/studentshub") && "blue"}
+                />
+                <List.Content>
+                  {pc && <List.Header content="Students Hub" />}
+                </List.Content>
+              </List.Item>
+            </Link>
+            <br />
+            <Link href="/qa">
+              <List.Item active={isActive("/qa")}>
+                <Icon
+                  name="question circle outline"
+                  size="large"
+                  color={
+                    (isActive("/qa") && "blue") || (unreadNotification && "red")
+                  }
+                />
+                <List.Content>
+                  {pc && <List.Header content="Job Resources & QA Section" />}
                 </List.Content>
               </List.Item>
             </Link>
@@ -247,7 +306,7 @@ function SideMenu({
               </List.Item>
             </Link>
             <br />
-            <Link href="#">
+            <Link href="/messages">
               <List.Item active={isActive("/messages")}>
                 <Icon
                   name={unreadMessage ? "hand point right" : "mail outline"}

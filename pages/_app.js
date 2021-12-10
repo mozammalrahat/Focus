@@ -27,7 +27,8 @@ class MyApp extends App {
       ctx.pathname === "/resource/universityIndex" ||
       ctx.pathname === "/resource/university" ||
       ctx.pathname === "/resource/files" ||
-      ctx.pathname === "/search";
+      ctx.pathname === "/search" ||
+      ctx.pathname === "/messages";
 
     // console.log("Path name is :");
     // console.log(ctx.pathname);
