@@ -1,23 +1,17 @@
 import axios from "axios";
-import { useRouter } from "next/router";
-import cookie from "js-cookie";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
-import React, { useEffect, useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
-import {
-  Button,
-  Segment,
-  Dropdown,
-  Divider,
-  Modal,
-  Card,
-  Image,
-} from "semantic-ui-react";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, Card, Image } from "semantic-ui-react";
+import io from "socket.io-client";
+import MessageNotificationModal from "../../components/Home/MessageNotificationModal";
 import { NoPosts } from "../../components/Layout/NoData";
 import baseUrl from "../../utils/baseUrl";
+import getUserInfo from "../../utils/getUserInfo";
+import newMsgSound from "../../utils/newMsgSound";
 
-function universityIndex({ univarsityData, uniList, errorLoading }) {
+function universityIndex({ user, univarsityData, uniList, errorLoading }) {
   const [posts, setPosts] = useState(univarsityData || []);
   const [showToastr, setShowToastr] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -28,6 +22,44 @@ function universityIndex({ univarsityData, uniList, errorLoading }) {
   // const [pageNumber, setPageNumber] = useState(2);
   const router = useRouter();
   const pathString = router.pathname;
+
+  const socket = useRef();
+
+  const [newMessageReceived, setNewMessageReceived] = useState(null);
+  const [newMessageModal, showNewMessageModal] = useState(false);
+
+  useEffect(() => {
+    if (!socket.current) {
+      socket.current = io(baseUrl);
+    }
+
+    if (socket.current) {
+      socket.current.emit("join", { userId: user._id });
+
+      socket.current.on("newMsgReceived", async ({ newMsg }) => {
+        const { name, profilePicUrl } = await getUserInfo(newMsg.sender);
+
+        if (user.newMessagePopup) {
+          setNewMessageReceived({
+            ...newMsg,
+            senderName: name,
+            senderProfilePic: profilePicUrl,
+          });
+          showNewMessageModal(true);
+        }
+        newMsgSound(name);
+      });
+    }
+
+    document.title = `Welcome, ${user.name.split(" ")[0]}`;
+
+    return () => {
+      if (socket.current) {
+        socket.current.emit("disconnect");
+        socket.current.off();
+      }
+    };
+  }, []);
 
   useEffect(() => {
     showToastr && setTimeout(() => setShowToastr(false), 3000);
@@ -56,12 +88,32 @@ function universityIndex({ univarsityData, uniList, errorLoading }) {
   if (posts.length === 0 || errorLoading)
     return (
       <>
+        {newMessageModal && newMessageReceived !== null && (
+          <MessageNotificationModal
+            socket={socket}
+            showNewMessageModal={showNewMessageModal}
+            newMessageModal={newMessageModal}
+            newMessageReceived={newMessageReceived}
+            user={user}
+          />
+        )}
+
         <NoPosts />
       </>
     );
 
   return (
     <>
+      {newMessageModal && newMessageReceived !== null && (
+        <MessageNotificationModal
+          socket={socket}
+          showNewMessageModal={showNewMessageModal}
+          newMessageModal={newMessageModal}
+          newMessageReceived={newMessageReceived}
+          user={user}
+        />
+      )}
+
       <Card
         fluid
         style={{

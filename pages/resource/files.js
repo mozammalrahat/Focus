@@ -2,8 +2,12 @@ import axios from "axios";
 import { parseCookies } from "nookies";
 import { useEffect, useRef, useState } from "react";
 import { Button, Divider, Form, Icon, Message, Table } from "semantic-ui-react";
+import io from "socket.io-client";
+import MessageNotificationModal from "../../components/Home/MessageNotificationModal";
 import baseUrl from "../../utils/baseUrl";
 import { deleteFile, submitNewFile } from "../../utils/fileActions";
+import getUserInfo from "../../utils/getUserInfo";
+import newMsgSound from "../../utils/newMsgSound";
 import uploadDocument from "../../utils/uploadDocumentToCloudinary";
 
 function Files({ user, previousFiles }) {
@@ -13,6 +17,41 @@ function Files({ user, previousFiles }) {
   const [filesList, setFilesList] = useState(previousFiles || []);
 
   const [showToastr, setShowToastr] = useState(false);
+
+  const socket = useRef();
+
+  const [newMessageReceived, setNewMessageReceived] = useState(null);
+  const [newMessageModal, showNewMessageModal] = useState(false);
+
+  useEffect(() => {
+    if (!socket.current) {
+      socket.current = io(baseUrl);
+    }
+
+    if (socket.current) {
+      socket.current.emit("join", { userId: user._id });
+
+      socket.current.on("newMsgReceived", async ({ newMsg }) => {
+        const { name, profilePicUrl } = await getUserInfo(newMsg.sender);
+
+        if (user.newMessagePopup) {
+          setNewMessageReceived({
+            ...newMsg,
+            senderName: name,
+            senderProfilePic: profilePicUrl,
+          });
+          showNewMessageModal(true);
+        }
+        newMsgSound(name);
+      });
+    }
+    return () => {
+      if (socket.current) {
+        socket.current.emit("disconnect");
+        socket.current.off();
+      }
+    };
+  }, []);
   useEffect(() => {
     showToastr && setTimeout(() => setShowToastr(false), 3000);
   }, [showToastr]);
@@ -83,6 +122,16 @@ function Files({ user, previousFiles }) {
 
   return (
     <>
+      {newMessageModal && newMessageReceived !== null && (
+        <MessageNotificationModal
+          socket={socket}
+          showNewMessageModal={showNewMessageModal}
+          newMessageModal={newMessageModal}
+          newMessageReceived={newMessageReceived}
+          user={user}
+        />
+      )}
+
       <Form error={error !== null} onSubmit={handleSubmit}>
         <Message
           error
