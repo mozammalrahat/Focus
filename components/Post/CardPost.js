@@ -24,12 +24,13 @@ import LikesList from "./LikesList";
 import NoImageModal from "./NoImageModal";
 import PostComments from "./PostComments";
 
-function CardPost({ post, user, setPosts, setShowToastr }) {
+function CardPost({ post, user, setPosts, setShowToastr, socket }) {
   const [likes, setLikes] = useState(post.likes);
   const router = useRouter();
   const pathString = router.pathname;
   // console.log("Inside Profile page --> pathString", pathString);
   // console.log("Inside Profile page --> pathString", pathString);
+  // console.log("socket.current= ", socket);
 
   const isLiked =
     likes.length > 0 &&
@@ -201,21 +202,64 @@ function CardPost({ post, user, setPosts, setShowToastr }) {
               color="green"
               size="large"
               style={{ cursor: "pointer" }}
-              onClick={() =>
-                pathString === "/studentshub"
-                  ? likePost(
-                      post._id,
-                      user._id,
-                      setLikes,
-                      isLiked ? false : true
-                    )
-                  : likeQuestion(
-                      post._id,
-                      user._id,
-                      setLikes,
-                      isLiked ? false : true
-                    )
-              }
+              onClick={() => {
+                if (socket.current) {
+                  if (
+                    pathString === "/qa" ||
+                    pathString === "/qa/jobpostIndex"
+                  ) {
+                    socket.current.emit("likePostQA", {
+                      postId: post._id,
+                      userId: user._id,
+                      like: isLiked ? false : true,
+                    });
+
+                    socket.current.on("postLikedQA", () => {
+                      if (isLiked) {
+                        setLikes((prev) =>
+                          prev.filter((like) => like.user !== user._id)
+                        );
+                      }
+                      //
+                      else {
+                        setLikes((prev) => [...prev, { user: user._id }]);
+                      }
+                    });
+                  } else {
+                    socket.current.emit("likePost", {
+                      postId: post._id,
+                      userId: user._id,
+                      like: isLiked ? false : true,
+                    });
+
+                    socket.current.on("postLiked", () => {
+                      if (isLiked) {
+                        setLikes((prev) =>
+                          prev.filter((like) => like.user !== user._id)
+                        );
+                      }
+                      //
+                      else {
+                        setLikes((prev) => [...prev, { user: user._id }]);
+                      }
+                    });
+                  }
+                } else {
+                  pathString === "/studentshub"
+                    ? likePost(
+                        post._id,
+                        user._id,
+                        setLikes,
+                        isLiked ? false : true
+                      )
+                    : likeQuestion(
+                        post._id,
+                        user._id,
+                        setLikes,
+                        isLiked ? false : true
+                      );
+                }
+              }}
             />
 
             <LikesList

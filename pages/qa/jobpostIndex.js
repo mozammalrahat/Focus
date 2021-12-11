@@ -19,6 +19,7 @@ import io from "socket.io-client";
 import MessageNotificationModal from "../../components/Home/MessageNotificationModal";
 import getUserInfo from "../../utils/getUserInfo";
 import newMsgSound from "../../utils/newMsgSound";
+import NotificationPortal from "../../components/Home/NotificationPortal";
 
 function jobpost({ user, postsData, errorLoading }) {
   const [posts, setPosts] = useState(postsData || []);
@@ -34,6 +35,9 @@ function jobpost({ user, postsData, errorLoading }) {
 
   const [newMessageReceived, setNewMessageReceived] = useState(null);
   const [newMessageModal, showNewMessageModal] = useState(false);
+
+  const [newNotification, setNewNotification] = useState(null);
+  const [notificationPopup, showNotificationPopup] = useState(false);
 
   useEffect(() => {
     if (!socket.current) {
@@ -107,6 +111,19 @@ function jobpost({ user, postsData, errorLoading }) {
       );
   }
 
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on(
+        "newNotificationReceivedQA",
+        ({ name, profilePicUrl, username, postId }) => {
+          setNewNotification({ name, profilePicUrl, username, postId });
+
+          showNotificationPopup(true);
+        }
+      );
+    }
+  }, []);
+
   return (
     <>
       {newMessageModal && newMessageReceived !== null && (
@@ -116,6 +133,13 @@ function jobpost({ user, postsData, errorLoading }) {
           newMessageModal={newMessageModal}
           newMessageReceived={newMessageReceived}
           user={user}
+        />
+      )}
+      {notificationPopup && newNotification !== null && (
+        <NotificationPortal
+          newNotification={newNotification}
+          notificationPopup={notificationPopup}
+          showNotificationPopup={showNotificationPopup}
         />
       )}
 
@@ -134,6 +158,7 @@ function jobpost({ user, postsData, errorLoading }) {
             >
               {posts.map((post) => (
                 <CardPost
+                  socket={socket}
                   key={post._id}
                   post={post}
                   user={user}
@@ -159,6 +184,7 @@ function jobpost({ user, postsData, errorLoading }) {
             >
               {posts.map((post) => (
                 <CardPost
+                  socket={socket}
                   key={post._id}
                   post={post}
                   user={user}
