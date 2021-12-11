@@ -24,16 +24,65 @@ const {
   deleteMsg,
 } = require("./utilsServer/messageActions");
 
+const { likeOrUnlikePost } = require("./utilsServer/likeOrUnlikePost");
+const {likeOrUnlikePostQA} = require("./utilsServer/likeOrUnlikePostQA");
+
 io.on("connection", (socket) => {
   socket.on("join", async ({ userId }) => {
     const users = await addUser(userId, socket.id);
-    console.log(users);
+    // console.log(users);
 
     setInterval(() => {
       socket.emit("connectedUsers", {
         users: users.filter((user) => user.userId !== userId),
       });
     }, 10000);
+  });
+
+  socket.on("likePost", async ({ postId, userId, like }) => {
+    const { success, name, profilePicUrl, username, postByUserId, error } =
+      await likeOrUnlikePost(postId, userId, like);
+
+    if (success) {
+      socket.emit("postLiked");
+
+      if (postByUserId !== userId) {
+        const receiverSocket = findConnectedUser(postByUserId);
+
+        if (receiverSocket && like) {
+          // WHEN YOU WANT TO SEND DATA TO ONE PARTICULAR CLIENT
+          io.to(receiverSocket.socketId).emit("newNotificationReceived", {
+            name,
+            profilePicUrl,
+            username,
+            postId,
+          });
+        }
+      }
+    }
+  });
+
+  socket.on("likePostQA", async ({ postId, userId, like }) => {
+    const { success, name, profilePicUrl, username, postByUserId, error } =
+      await likeOrUnlikePostQA(postId, userId, like);
+
+    if (success) {
+      socket.emit("postLikedQA");
+
+      if (postByUserId !== userId) {
+        const receiverSocket = findConnectedUser(postByUserId);
+
+        if (receiverSocket && like) {
+          // WHEN YOU WANT TO SEND DATA TO ONE PARTICULAR CLIENT
+          io.to(receiverSocket.socketId).emit("newNotificationReceivedQA", {
+            name,
+            profilePicUrl,
+            username,
+            postId,
+          });
+        }
+      }
+    }
   });
 
   socket.on("loadMessages", async ({ userId, messagesWith }) => {
