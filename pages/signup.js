@@ -18,7 +18,7 @@ function Signup() {
     name: "",
     email: "",
     registrationNumber: "",
-    university,
+    university: "",
     password: "",
     bio: "",
     facebook: "",
