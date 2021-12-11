@@ -1,8 +1,8 @@
 import axios from "axios";
-import { useRouter } from "next/router";
 import cookie from "js-cookie";
+import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Segment } from "semantic-ui-react";
 import { NoPosts } from "../../components/Layout/NoData";
@@ -15,6 +15,10 @@ import CardPost from "../../components/Post/CardPost";
 import CreatePost from "../../components/Post/CreatePost";
 import CreatePostQA from "../../components/Post/CreatePostQA";
 import baseUrl from "../../utils/baseUrl";
+import io from "socket.io-client";
+import MessageNotificationModal from "../../components/Home/MessageNotificationModal";
+import getUserInfo from "../../utils/getUserInfo";
+import newMsgSound from "../../utils/newMsgSound";
 
 function index({ user, postsData, errorLoading }) {
   const [posts, setPosts] = useState(postsData || []);
@@ -26,8 +30,42 @@ function index({ user, postsData, errorLoading }) {
 
   const [pageNumber, setPageNumber] = useState(2);
 
+  const socket = useRef();
+
+  const [newMessageReceived, setNewMessageReceived] = useState(null);
+  const [newMessageModal, showNewMessageModal] = useState(false);
+
   useEffect(() => {
+    if (!socket.current) {
+      socket.current = io(baseUrl);
+    }
+
+    if (socket.current) {
+      socket.current.emit("join", { userId: user._id });
+
+      socket.current.on("newMsgReceived", async ({ newMsg }) => {
+        const { name, profilePicUrl } = await getUserInfo(newMsg.sender);
+
+        if (user.newMessagePopup) {
+          setNewMessageReceived({
+            ...newMsg,
+            senderName: name,
+            senderProfilePic: profilePicUrl,
+          });
+          showNewMessageModal(true);
+        }
+        newMsgSound(name);
+      });
+    }
+
     document.title = `Welcome, ${user.name.split(" ")[0]}`;
+
+    return () => {
+      if (socket.current) {
+        socket.current.emit("disconnect");
+        socket.current.off();
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -71,6 +109,16 @@ function index({ user, postsData, errorLoading }) {
 
   return (
     <>
+      {newMessageModal && newMessageReceived !== null && (
+        <MessageNotificationModal
+          socket={socket}
+          showNewMessageModal={showNewMessageModal}
+          newMessageModal={newMessageModal}
+          newMessageReceived={newMessageReceived}
+          user={user}
+        />
+      )}
+
       {pathString === "/re" ? (
         <>
           {showToastr && <PostDeleteToastr />}

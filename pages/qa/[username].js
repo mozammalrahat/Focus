@@ -2,8 +2,10 @@ import axios from "axios";
 import cookie from "js-cookie";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Grid } from "semantic-ui-react";
+import io from "socket.io-client";
+import MessageNotificationModal from "../../components/Home/MessageNotificationModal";
 import { NoProfile, NoProfilePosts } from "../../components/Layout/NoData";
 import { PlaceHolderPosts } from "../../components/Layout/PlaceHolderGroup";
 import { PostDeleteToastr } from "../../components/Layout/Toastr";
@@ -15,6 +17,8 @@ import ProfileMenuTabs from "../../components/Profile/ProfileMenuTabs";
 import Settings from "../../components/Profile/Settings";
 import UpdateProfile from "../../components/Profile/UpdateProfile";
 import baseUrl from "../../utils/baseUrl";
+import getUserInfo from "../../utils/getUserInfo";
+import newMsgSound from "../../utils/newMsgSound";
 
 function ProfilePage({
   errorLoading,
@@ -41,6 +45,42 @@ function ProfilePage({
   const ownAccount = profile.user._id === user._id;
 
   if (errorLoading) return <NoProfile />;
+
+  const socket = useRef();
+
+  const [newMessageReceived, setNewMessageReceived] = useState(null);
+  const [newMessageModal, showNewMessageModal] = useState(false);
+
+  useEffect(() => {
+    if (!socket.current) {
+      socket.current = io(baseUrl);
+    }
+
+    if (socket.current) {
+      socket.current.emit("join", { userId: user._id });
+
+      socket.current.on("newMsgReceived", async ({ newMsg }) => {
+        const { name, profilePicUrl } = await getUserInfo(newMsg.sender);
+
+        if (user.newMessagePopup) {
+          setNewMessageReceived({
+            ...newMsg,
+            senderName: name,
+            senderProfilePic: profilePicUrl,
+          });
+          showNewMessageModal(true);
+        }
+        newMsgSound(name);
+      });
+    }
+
+    return () => {
+      if (socket.current) {
+        socket.current.emit("disconnect");
+        socket.current.off();
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const getPosts = async () => {
@@ -74,6 +114,15 @@ function ProfilePage({
   return (
     <>
       {showToastr && <PostDeleteToastr />}
+      {newMessageModal && newMessageReceived !== null && (
+        <MessageNotificationModal
+          socket={socket}
+          showNewMessageModal={showNewMessageModal}
+          newMessageModal={newMessageModal}
+          newMessageReceived={newMessageReceived}
+          user={user}
+        />
+      )}
 
       <Grid stackable>
         <Grid.Row>
