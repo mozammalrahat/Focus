@@ -9,136 +9,124 @@ function Home({ user }) {
   const handleLink = (path) => {
     if (cookie.get("token")) {
       Router.push(path);
-      // console.log("redirecting to Students Hub");
     } else {
       Router.push("/login");
     }
   };
 
-  // console.log(email);
-
   return (
-    <>
-      {email != "abc" ? (
-        <>
+    <div>
+      <Grid relaxed divided container centered>
+        <Grid.Row>
+          <Image
+            avatar
+            centered
+            src="/focus.PNG"
+            size="small"
+
+            // style={{
+            //   marginLeft: "163px",
+            //   width: "270px",
+            // }}
+          />
+        </Grid.Row>
+
+        <Grid.Row style={{ margin: "20px" }}>
           <Button
-            inverted
-            color="red"
+            className="button1"
             style={{
-              position: "absolute",
-              top: "20px",
-              right: "10px",
-              fontSize: "22px",
-              height: "55px",
-              width: "140px",
+              borderColor: "black",
+              borderStyle: "outset",
+              color: "black",
+              backgroundColor: "#c4e6f3",
+              height: "auto",
+              borderRadius: "20px",
+              width: "460px",
             }}
-            onClick={() => logoutUser(email)}
+            inverted
+            onClick={() => handleLink("qa/")}
           >
-            Logout
+            <div>
+              <h1>
+                <Icon
+                  name="question circle"
+                  size="large"
+                  style={{ cursor: "pointer" }}
+                />{" "}
+                Job Resources & QA Section
+              </h1>
+            </div>
           </Button>
-        </>
-      ) : (
-        <></>
-      )}
-      <div>
-        <Image
-          src="/focus.PNG"
-          size="large"
-          style={{
-            marginLeft: "163px",
-            width: "270px",
-          }}
-        />
-        <Grid
-          style={{
-            // marginTop: "10px",
-            marginLeft: "50px",
-          }}
-        >
-          <Grid.Row style={{ margin: "20px" }}>
-            <Button
-              className="button1"
-              style={{
-                borderColor: "black",
-                borderStyle: "outset",
-                color: "black",
-                backgroundColor: "#c4e6f3",
-                height: "100px",
-                borderRadius: "20px",
-                width: "460px",
-              }}
-              inverted
-              onClick={() => handleLink("qa/")}
-            >
-              <div>
-                <h1>
-                  <Icon
-                    name="question circle"
-                    size="large"
-                    style={{ cursor: "pointer" }}
-                  />{" "}
-                  Job Resources & QA Section
-                </h1>
-              </div>
-            </Button>
-          </Grid.Row>
+        </Grid.Row>
 
-          <Grid.Row style={{ margin: "20px" }}>
-            <Button
-              style={{
-                borderColor: "black",
-                borderStyle: "outset",
-                color: "black",
-                backgroundColor: "#c4e6f3",
-                height: "100px",
-                borderRadius: "20px",
-                width: "460px",
-              }}
-              inverted
-              onClick={() => handleLink("studentshub/")}
-            >
-              <div>
-                <h1 style={{ width: "408px" }}>
-                  <Icon
-                    name="student"
-                    size="large"
-                    style={{ cursor: "pointer" }}
-                  />{" "}
-                  Students Hub
-                </h1>
-              </div>
-            </Button>
-          </Grid.Row>
+        <Grid.Row style={{ margin: "20px" }}>
+          <Button
+            className="button1"
+            style={{
+              borderColor: "black",
+              borderStyle: "outset",
+              color: "black",
+              backgroundColor: "#c4e6f3",
+              height: "auto",
+              borderRadius: "20px",
+              width: "460px",
+            }}
+            inverted
+            onClick={() => handleLink("studentshub/")}
+          >
+            <div>
+              <h1>
+                <Icon
+                  name="student"
+                  size="large"
+                  style={{ cursor: "pointer" }}
+                />{" "}
+                Students Hub
+              </h1>
+            </div>
+          </Button>
+        </Grid.Row>
 
-          <Grid.Row style={{ margin: "20px" }}>
+        <Grid.Row style={{ margin: "20px" }}>
+          <Button
+            className="button1"
+            style={{
+              borderColor: "black",
+              borderStyle: "outset",
+              color: "black",
+              backgroundColor: "#c4e6f3",
+              height: "auto",
+              borderRadius: "20px",
+              width: "460px",
+            }}
+            inverted
+            onClick={() => handleLink("resource/")}
+          >
+            <div>
+              <h1>
+                <Icon name="book" size="large" style={{ cursor: "pointer" }} />{" "}
+                Higher Study & Resources
+              </h1>
+            </div>
+          </Button>
+        </Grid.Row>
+
+        <Grid.Row style={{ margin: "20px" }}>
+          {email != "abc" ? (
             <Button
-              style={{
-                borderColor: "black",
-                borderStyle: "outset",
-                color: "black",
-                backgroundColor: "#c4e6f3",
-                height: "100px",
-                borderRadius: "20px",
-                width: "460px",
-              }}
-              inverted
-              onClick={() => handleLink("resource/")}
+              primary
+              size="massive"
+              floated="right"
+              onClick={() => logoutUser(email)}
             >
-              <div>
-                <h1 style={{ width: "408px" }}>
-                  <Icon
-                    name="book"
-                    size="large"
-                    style={{ cursor: "pointer" }}
-                  />{" "}
-                  Higher Study & Resources
-                </h1>
-              </div>
+              Logout
             </Button>
-          </Grid.Row>
-        </Grid>
-      </div>
-    </>
+          ) : (
+            <></>
+          )}
+        </Grid.Row>
+      </Grid>
+    </div>
   );
 }
 
