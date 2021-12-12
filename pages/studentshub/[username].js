@@ -20,6 +20,9 @@ import baseUrl from "../../utils/baseUrl";
 import getUserInfo from "../../utils/getUserInfo";
 import newMsgSound from "../../utils/newMsgSound";
 
+import NotificationPortal from "../../components/Home/NotificationPortal";
+import CommentNotificationPortal from "../../components/Home/CommentNotificationPortal";
+
 function ProfilePage({
   errorLoading,
   profile,
@@ -49,6 +52,13 @@ function ProfilePage({
 
   const [newMessageReceived, setNewMessageReceived] = useState(null);
   const [newMessageModal, showNewMessageModal] = useState(false);
+
+  const [newNotification, setNewNotification] = useState(null);
+  const [notificationPopup, showNotificationPopup] = useState(false);
+
+  const [newCommentNotification, setNewCommentNotification] = useState(null);
+  const [commeNtnotificationPopup, showCommentNotificationPopup] =
+    useState(false);
 
   useEffect(() => {
     if (!socket.current) {
@@ -108,8 +118,44 @@ function ProfilePage({
     showToastr && setTimeout(() => setShowToastr(false), 4000);
   }, [showToastr]);
 
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on(
+        "newNotificationReceived",
+        ({ name, profilePicUrl, username, postId }) => {
+          setNewNotification({ name, profilePicUrl, username, postId });
+
+          showNotificationPopup(true);
+        }
+      );
+      socket.current.on(
+        "newCommentNotificationReceived",
+        ({ name, profilePicUrl, username, postId }) => {
+          setNewCommentNotification({ name, profilePicUrl, username, postId });
+
+          showCommentNotificationPopup(true);
+        }
+      );
+    }
+  }, []);
+
   return (
     <>
+      {notificationPopup && newNotification !== null && (
+        <NotificationPortal
+          newNotification={newNotification}
+          notificationPopup={notificationPopup}
+          showNotificationPopup={showNotificationPopup}
+        />
+      )}
+
+      {commeNtnotificationPopup && newCommentNotification !== null && (
+        <CommentNotificationPortal
+          newNotification={newCommentNotification}
+          notificationPopup={commeNtnotificationPopup}
+          showNotificationPopup={showCommentNotificationPopup}
+        />
+      )}
       {showToastr && <PostDeleteToastr />}
 
       {newMessageModal && newMessageReceived !== null && (
@@ -152,6 +198,7 @@ function ProfilePage({
                 ) : posts.length > 0 ? (
                   posts.map((post) => (
                     <CardPost
+                      socket={socket}
                       key={post._id}
                       post={post}
                       user={user}
