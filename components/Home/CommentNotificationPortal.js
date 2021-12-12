@@ -9,7 +9,7 @@ function CommentNotificationPortal({
   showNotificationPopup,
 }) {
   const router = useRouter();
-  const pathString = router.pathname;
+  const pathString = router.pathname.slice(0, 3);
   console.log("Inside Profile page --> pathString", pathString);
 
   const { name, profilePicUrl, username, postId } = newNotification;
@@ -44,7 +44,7 @@ function CommentNotificationPortal({
                   {name}{" "}
                 </Feed.User>{" "}
                 commented on your{" "}
-                {pathString === "/studentshub" ? (
+                {pathString === "/st" ? (
                   <>
                     <a
                       onClick={() => router.push(`/studentshub/post/${postId}`)}
