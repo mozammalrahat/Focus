@@ -27,9 +27,9 @@ import PostComments from "./PostComments";
 function CardPost({ post, user, setPosts, setShowToastr, socket }) {
   const [likes, setLikes] = useState(post.likes);
   const router = useRouter();
-  const pathString = router.pathname;
+  const pathString = router.pathname.slice(0, 3);
   // console.log("Inside Profile page --> pathString", pathString);
-  // console.log("Inside Profile page --> pathString", pathString);
+  console.log("CardPost --> pathString", pathString);
   // console.log("socket.current= ", socket);
 
   const isLiked =
@@ -108,7 +108,7 @@ function CardPost({ post, user, setPosts, setShowToastr, socket }) {
                     icon="trash"
                     content="Delete"
                     onClick={() =>
-                      pathString === "/studentshub"
+                      pathString === "/st"
                         ? deletePost(post._id, setPosts, setShowToastr)
                         : deleteQuestion(post._id, setPosts, setShowToastr)
                     }
@@ -126,7 +126,7 @@ function CardPost({ post, user, setPosts, setShowToastr, socket }) {
                 color: "black",
               }}
             >
-              {pathString === "/studentshub" ? (
+              {pathString === "/st" ? (
                 <>
                   <Link href={`/studentshub/${post.user.username}`}>
                     <a>{post.user.name}</a>
@@ -204,10 +204,7 @@ function CardPost({ post, user, setPosts, setShowToastr, socket }) {
               style={{ cursor: "pointer" }}
               onClick={() => {
                 if (socket.current) {
-                  if (
-                    pathString === "/qa" ||
-                    pathString === "/qa/jobpostIndex"
-                  ) {
+                  if (pathString === "/qa") {
                     socket.current.emit("likePostQA", {
                       postId: post._id,
                       userId: user._id,
@@ -245,7 +242,7 @@ function CardPost({ post, user, setPosts, setShowToastr, socket }) {
                     });
                   }
                 } else {
-                  pathString === "/studentshub"
+                  pathString === "/st"
                     ? likePost(
                         post._id,
                         user._id,
@@ -269,9 +266,7 @@ function CardPost({ post, user, setPosts, setShowToastr, socket }) {
                   <span className="spanLikesList">
                     {`${likes.length}
                     ${
-                      pathString === "/qa" ||
-                      pathString === "/resource" ||
-                      pathString === "/qa/jobpostIndex"
+                      pathString === "/qa" || pathString === "/re"
                         ? likes.length === 1
                           ? "vote"
                           : "votes"
