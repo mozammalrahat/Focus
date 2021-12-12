@@ -69,8 +69,8 @@ function ProfilePage({
             senderProfilePic: profilePicUrl,
           });
           showNewMessageModal(true);
+          newMsgSound(name);
         }
-        newMsgSound(name);
       });
     }
 

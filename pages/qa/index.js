@@ -56,8 +56,8 @@ function Index({ user, postsData, errorLoading }) {
             senderProfilePic: profilePicUrl,
           });
           showNewMessageModal(true);
+          newMsgSound(name);
         }
-        newMsgSound(name);
       });
     }
 

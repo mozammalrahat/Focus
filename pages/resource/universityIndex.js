@@ -46,8 +46,8 @@ function universityIndex({ user, univarsityData, uniList, errorLoading }) {
             senderProfilePic: profilePicUrl,
           });
           showNewMessageModal(true);
+          newMsgSound(name);
         }
-        newMsgSound(name);
       });
     }
 

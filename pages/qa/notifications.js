@@ -37,8 +37,8 @@ function Notifications({ notifications, errorLoading, user, userFollowStats }) {
             senderProfilePic: profilePicUrl,
           });
           showNewMessageModal(true);
+          newMsgSound(name);
         }
-        newMsgSound(name);
       });
     }
 

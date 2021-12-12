@@ -53,8 +53,6 @@ function Index({ user, postsData, errorLoading }) {
           });
           showNewMessageModal(true);
           newMsgSound(name);
-        } else {
-          // user.unreadMessage = true;
         }
       });
     }

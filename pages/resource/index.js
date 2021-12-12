@@ -2,21 +2,21 @@ import axios from "axios";
 import cookie from "js-cookie";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Segment } from "semantic-ui-react";
+import io from "socket.io-client";
+import MessageNotificationModal from "../../components/Home/MessageNotificationModal";
 import { NoPosts } from "../../components/Layout/NoData";
 import {
   EndMessage,
-  PlaceHolderPosts,
+  PlaceHolderPosts
 } from "../../components/Layout/PlaceHolderGroup";
 import { PostDeleteToastr } from "../../components/Layout/Toastr";
 import CardPost from "../../components/Post/CardPost";
 import CreatePost from "../../components/Post/CreatePost";
 import CreatePostQA from "../../components/Post/CreatePostQA";
 import baseUrl from "../../utils/baseUrl";
-import io from "socket.io-client";
-import MessageNotificationModal from "../../components/Home/MessageNotificationModal";
 import getUserInfo from "../../utils/getUserInfo";
 import newMsgSound from "../../utils/newMsgSound";
 
@@ -53,8 +53,8 @@ function index({ user, postsData, errorLoading }) {
             senderProfilePic: profilePicUrl,
           });
           showNewMessageModal(true);
+          newMsgSound(name);
         }
-        newMsgSound(name);
       });
     }
 

@@ -41,8 +41,8 @@ function Files({ user, previousFiles }) {
             senderProfilePic: profilePicUrl,
           });
           showNewMessageModal(true);
+          newMsgSound(name);
         }
-        newMsgSound(name);
       });
     }
     return () => {
