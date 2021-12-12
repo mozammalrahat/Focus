@@ -4,20 +4,59 @@ import { Form } from "semantic-ui-react";
 import { postComment } from "../../utils/postActions";
 import { postComment as postAnswer } from "../../utils/qaActions";
 
-function CommentInputField({ postId, user, setComments }) {
+function CommentInputField({ postId, user, setComments, socket }) {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const pathString = router.pathname;
+  // console.log("socket-->", socket);
   return (
     <Form
       onSubmit={async (e) => {
         e.preventDefault();
         setLoading(true);
-        pathString === "/studentshub"
-          ? await postComment(postId, user, text, setComments, setText)
-          : await postAnswer(postId, user, text, setComments, setText);
+        if (socket.current) {
+          if(pathString==="/studentshub"){
+            socket.current.emit("commentPost", {
+              postId: postId,
+              userId: user._id,
+              text: text,
+            });
+  
+            socket.current.on("postCommented", async () => {
+              try {
+                pathString === "/studentshub"
+                  ? await postComment(postId, user, text, setComments, setText)
+                  : await postAnswer(postId, user, text, setComments, setText);
+              } catch (error) {
+                alert(catchErrors(error));
+              }
+            });
 
+          }
+          else{
+            socket.current.emit("commentPostQA", {
+              postId: postId,
+              userId: user._id,
+              text: text,
+            });
+  
+            socket.current.on("postCommentedQA", async () => {
+              try {
+                pathString === "/studentshub"
+                  ? await postComment(postId, user, text, setComments, setText)
+                  : await postAnswer(postId, user, text, setComments, setText);
+              } catch (error) {
+                alert(catchErrors(error));
+              }
+            });
+
+          }
+        } else {
+          pathString === "/studentshub"
+            ? await postComment(postId, user, text, setComments, setText)
+            : await postAnswer(postId, user, text, setComments, setText);
+        }
         setLoading(false);
       }}
     >

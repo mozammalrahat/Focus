@@ -20,6 +20,7 @@ import MessageNotificationModal from "../../components/Home/MessageNotificationM
 import getUserInfo from "../../utils/getUserInfo";
 import newMsgSound from "../../utils/newMsgSound";
 import NotificationPortal from "../../components/Home/NotificationPortal";
+import CommentNotificationPortal from "../../components/Home/CommentNotificationPortal";
 
 function jobpost({ user, postsData, errorLoading }) {
   const [posts, setPosts] = useState(postsData || []);
@@ -38,6 +39,10 @@ function jobpost({ user, postsData, errorLoading }) {
 
   const [newNotification, setNewNotification] = useState(null);
   const [notificationPopup, showNotificationPopup] = useState(false);
+
+  const [newCommentNotification, setNewCommentNotification] = useState(null);
+  const [commeNtnotificationPopup, showCommentNotificationPopup] =
+    useState(false);
 
   useEffect(() => {
     if (!socket.current) {
@@ -121,6 +126,15 @@ function jobpost({ user, postsData, errorLoading }) {
           showNotificationPopup(true);
         }
       );
+
+      socket.current.on(
+        "newCommentNotificationReceivedQA",
+        ({ name, profilePicUrl, username, postId }) => {
+          setNewCommentNotification({ name, profilePicUrl, username, postId });
+
+          showCommentNotificationPopup(true);
+        }
+      );
     }
   }, []);
 
@@ -140,6 +154,14 @@ function jobpost({ user, postsData, errorLoading }) {
           newNotification={newNotification}
           notificationPopup={notificationPopup}
           showNotificationPopup={showNotificationPopup}
+        />
+      )}
+
+      {commeNtnotificationPopup && newCommentNotification !== null && (
+        <CommentNotificationPortal
+          newNotification={newCommentNotification}
+          notificationPopup={commeNtnotificationPopup}
+          showNotificationPopup={showCommentNotificationPopup}
         />
       )}
 
