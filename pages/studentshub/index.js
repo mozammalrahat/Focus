@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Segment } from "semantic-ui-react";
 import io from "socket.io-client";
+import CommentNotificationPortal from "../../components/Home/CommentNotificationPortal";
 import MessageNotificationModal from "../../components/Home/MessageNotificationModal";
 import NotificationPortal from "../../components/Home/NotificationPortal";
 import { NoPosts } from "../../components/Layout/NoData";
@@ -33,6 +34,10 @@ function Index({ user, postsData, errorLoading }) {
 
   const [newNotification, setNewNotification] = useState(null);
   const [notificationPopup, showNotificationPopup] = useState(false);
+
+  const [newCommentNotification, setNewCommentNotification] = useState(null);
+  const [commeNtnotificationPopup, showCommentNotificationPopup] =
+    useState(false);
 
   useEffect(() => {
     if (!socket.current) {
@@ -118,6 +123,14 @@ function Index({ user, postsData, errorLoading }) {
           showNotificationPopup(true);
         }
       );
+      socket.current.on(
+        "newCommentNotificationReceived",
+        ({ name, profilePicUrl, username, postId }) => {
+          setNewCommentNotification({ name, profilePicUrl, username, postId });
+
+          showCommentNotificationPopup(true);
+        }
+      );
     }
   }, []);
   return (
@@ -129,6 +142,15 @@ function Index({ user, postsData, errorLoading }) {
           showNotificationPopup={showNotificationPopup}
         />
       )}
+
+      {commeNtnotificationPopup && newCommentNotification !== null && (
+        <CommentNotificationPortal
+          newNotification={newCommentNotification}
+          notificationPopup={commeNtnotificationPopup}
+          showNotificationPopup={showCommentNotificationPopup}
+        />
+      )}
+
       {showToastr && <PostDeleteToastr />}
 
       {newMessageModal && newMessageReceived !== null && (
