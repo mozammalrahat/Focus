@@ -321,6 +321,7 @@ function CardPost({ post, user, setPosts, setShowToastr, socket }) {
               user={user}
               postId={post._id}
               setComments={setComments}
+              socket={socket}
             />
           </Card.Content>
         </Card>

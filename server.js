@@ -25,7 +25,9 @@ const {
 } = require("./utilsServer/messageActions");
 
 const { likeOrUnlikePost } = require("./utilsServer/likeOrUnlikePost");
-const {likeOrUnlikePostQA} = require("./utilsServer/likeOrUnlikePostQA");
+const { likeOrUnlikePostQA } = require("./utilsServer/likeOrUnlikePostQA");
+const { commentPost } = require("./utilsServer/commentPost");
+const { commentPostQA } = require("./utilsServer/commentPostQA");
 
 io.on("connection", (socket) => {
   socket.on("join", async ({ userId }) => {
@@ -80,6 +82,61 @@ io.on("connection", (socket) => {
             username,
             postId,
           });
+        }
+      }
+    }
+  });
+
+  socket.on("commentPost", async ({ postId, userId, text }) => {
+    // console.log("commentPost");
+    const { success, name, profilePicUrl, username, postByUserId, error } =
+      await commentPost(postId, userId, text);
+
+    if (success) {
+      socket.emit("postCommented");
+
+      if (postByUserId !== userId) {
+        const receiverSocket = findConnectedUser(postByUserId);
+        // console.log("OutsidereceiverSocket", receiverSocket);
+        if (receiverSocket && text) {
+          // WHEN YOU WANT TO SEND DATA TO ONE PARTICULAR CLIENT
+
+          io.to(receiverSocket.socketId).emit(
+            "newCommentNotificationReceived",
+            {
+              name,
+              profilePicUrl,
+              username,
+              postId,
+            }
+          );
+        }
+      }
+    }
+  });
+
+  socket.on("commentPostQA", async ({ postId, userId, text }) => {
+    // console.log("commentPost");
+    const { success, name, profilePicUrl, username, postByUserId, error } =
+      await commentPostQA(postId, userId, text);
+
+    if (success) {
+      socket.emit("postCommentedQA");
+
+      if (postByUserId !== userId) {
+        const receiverSocket = findConnectedUser(postByUserId);
+        // console.log("OutsidereceiverSocket", receiverSocket);
+        if (receiverSocket && text) {
+          // WHEN YOU WANT TO SEND DATA TO ONE PARTICULAR CLIENT
+          io.to(receiverSocket.socketId).emit(
+            "newCommentNotificationReceivedQA",
+            {
+              name,
+              profilePicUrl,
+              username,
+              postId,
+            }
+          );
         }
       }
     }

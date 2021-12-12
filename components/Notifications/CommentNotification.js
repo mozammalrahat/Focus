@@ -20,7 +20,7 @@ function CommentNotification({ notification }) {
               {pathString === "/qa" ? (
                 <a href={`/qa/post/${notification.question._id}`}>question.</a>
               ) : (
-                <a href={`/post/${notification.post._id}`}>post.</a>
+                <a href={`/studentshub/post/${notification.post._id}`}>post.</a>
               )}
               <Feed.Date>{calculateTime(notification.date)}</Feed.Date>
             </>
@@ -36,7 +36,7 @@ function CommentNotification({ notification }) {
               )
             : notification.post.picUrl && (
                 <Feed.Extra images>
-                  <a href={`/post/${notification.post._id}`}>
+                  <a href={`studentshub/post/${notification.post._id}`}>
                     <img src={notification.post.picUrl} />
                   </a>
                 </Feed.Extra>

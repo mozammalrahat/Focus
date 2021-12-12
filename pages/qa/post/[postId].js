@@ -22,7 +22,7 @@ function PostPage({ post, errorLoading, user }) {
     return <NoPostFound />;
   }
 
-  console.log("@@post------->", post);
+  // console.log("@@post------->", post);
 
   const [likes, setLikes] = useState(post.likes);
 
