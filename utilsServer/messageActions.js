@@ -134,4 +134,10 @@ const deleteMsg = async (userId, messagesWith, messageId) => {
   }
 };
 
-module.exports = { loadMessages, sendMsg, setMsgToUnread, deleteMsg };
+module.exports = {
+  loadMessages,
+  sendMsg,
+  setMsgToUnread,
+  deleteMsg,
+  checkUserPopUp,
+};

@@ -158,7 +158,7 @@ io.on("connection", (socket) => {
     if (receiverSocket) {
       // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
       io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
-      checkUserPopUp(msgSendToUserId);
+      await checkUserPopUp(msgSendToUserId);
     }
     //
     else {
