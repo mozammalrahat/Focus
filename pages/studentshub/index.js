@@ -6,6 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { Segment } from "semantic-ui-react";
 import io from "socket.io-client";
 import MessageNotificationModal from "../../components/Home/MessageNotificationModal";
+import NotificationPortal from "../../components/Home/NotificationPortal";
 import { NoPosts } from "../../components/Layout/NoData";
 import {
   EndMessage,
@@ -17,7 +18,6 @@ import CreatePost from "../../components/Post/CreatePost";
 import baseUrl from "../../utils/baseUrl";
 import getUserInfo from "../../utils/getUserInfo";
 import newMsgSound from "../../utils/newMsgSound";
-import NotificationPortal from "../../components/Home/NotificationPortal";
 
 function Index({ user, postsData, errorLoading }) {
   const [posts, setPosts] = useState(postsData || []);
@@ -52,8 +52,10 @@ function Index({ user, postsData, errorLoading }) {
             senderProfilePic: profilePicUrl,
           });
           showNewMessageModal(true);
+          newMsgSound(name);
+        } else {
+          // user.unreadMessage = true;
         }
-        newMsgSound(name);
       });
     }
 

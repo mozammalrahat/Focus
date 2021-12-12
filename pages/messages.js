@@ -34,6 +34,22 @@ function Messages({ chatsData, user }) {
   // This ref is for persisting the state of query string in url throughout re-renders. This ref is the value of query string inside url
   const openChatId = useRef("");
 
+  useEffect(() => {
+    const messageRead = async () => {
+      try {
+        await axios.post(
+          `${baseUrl}/api/chats`,
+          {},
+          { headers: { Authorization: cookie.get("token") } }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    messageRead();
+  }, []);
+
   //CONNECTION useEffect
   useEffect(() => {
     if (!socket.current) {

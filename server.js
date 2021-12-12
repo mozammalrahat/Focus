@@ -22,10 +22,11 @@ const {
   sendMsg,
   setMsgToUnread,
   deleteMsg,
+  checkUserPopUp,
 } = require("./utilsServer/messageActions");
 
 const { likeOrUnlikePost } = require("./utilsServer/likeOrUnlikePost");
-const {likeOrUnlikePostQA} = require("./utilsServer/likeOrUnlikePostQA");
+const { likeOrUnlikePostQA } = require("./utilsServer/likeOrUnlikePostQA");
 
 io.on("connection", (socket) => {
   socket.on("join", async ({ userId }) => {
@@ -100,6 +101,7 @@ io.on("connection", (socket) => {
     if (receiverSocket) {
       // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
       io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
+      checkUserPopUp(msgSendToUserId);
     }
     //
     else {

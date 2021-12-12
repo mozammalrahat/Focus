@@ -5,7 +5,6 @@ import { Button, Grid, Icon, Image } from "semantic-ui-react";
 import { logoutUser } from "../utils/authUser";
 
 function Home({ user }) {
-  const email = user ? user.email : "abc";
   const handleLink = (path) => {
     if (cookie.get("token")) {
       Router.push(path);
@@ -13,6 +12,7 @@ function Home({ user }) {
       Router.push("/login");
     }
   };
+  const email = user ? user.email : null;
 
   return (
     <div>
@@ -112,7 +112,7 @@ function Home({ user }) {
         </Grid.Row>
 
         <Grid.Row style={{ margin: "20px" }}>
-          {email != "abc" ? (
+          {email && (
             <Button
               primary
               size="massive"
@@ -121,8 +121,6 @@ function Home({ user }) {
             >
               Logout
             </Button>
-          ) : (
-            <></>
           )}
         </Grid.Row>
       </Grid>
