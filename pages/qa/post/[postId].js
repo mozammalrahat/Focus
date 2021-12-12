@@ -22,15 +22,15 @@ function PostPage({ post, errorLoading, user }) {
     return <NoPostFound />;
   }
 
-  // console.log("@@post.qa_toggle------->", post.qa_toggle);
+  console.log("@@post------->", post);
 
-  const [votes, setVotes] = useState(post.votes);
+  const [likes, setLikes] = useState(post.likes);
 
-  const isVoted =
-    votes.length > 0 &&
-    votes.filter((vote) => vote.user === user._id).length > 0;
+  const isLiked =
+    likes.length > 0 &&
+    likes.filter((like) => like.user === user._id).length > 0;
 
-  const [answers, setAnswers] = useState(post.answers);
+  const [comments, setComments] = useState(post.comments);
 
   return (
     <Container text>
@@ -78,20 +78,20 @@ function PostPage({ post, errorLoading, user }) {
 
           <Card.Content extra>
             <Icon
-              name={isVoted ? "heart" : "heart outline"}
+              name={isLiked ? "heart" : "heart outline"}
               color="red"
               style={{ cursor: "pointer" }}
-              // onClick={() =>
-              //   likePost(post._id, user._id, setVotes, isVoted ? false : true)
-              // }
+              onClick={() =>
+                likePost(post._id, user._id, setLikes, isLiked ? false : true)
+              }
             />
 
             <LikesList
               postId={post._id}
               trigger={
-                votes.length > 0 && (
+                likes.length > 0 && (
                   <span className="spanLikesList">
-                    {`${votes.length} ${votes.length === 1 ? "like" : "likes"}`}
+                    {`${likes.length} ${likes.length === 1 ? "like" : "likes"}`}
                   </span>
                 )
               }
@@ -103,14 +103,14 @@ function PostPage({ post, errorLoading, user }) {
               color="blue"
             />
 
-            {answers.length > 0 &&
-              answers.map((comment) => (
+            {comments.length > 0 &&
+              comments.map((comment) => (
                 <PostComments
                   key={comment._id}
                   comment={comment}
                   postId={post._id}
                   user={user}
-                  setComments={setAnswers}
+                  setComments={setComments}
                 />
               ))}
 
@@ -119,7 +119,7 @@ function PostPage({ post, errorLoading, user }) {
             <CommentInputField
               user={user}
               postId={post._id}
-              setComments={setAnswers}
+              setComments={setComments}
             />
           </Card.Content>
         </Card>
