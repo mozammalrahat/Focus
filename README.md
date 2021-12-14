@@ -90,5 +90,3 @@ https://user-images.githubusercontent.com/40220345/145923330-db91e2aa-b98d-4277-
 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424210/FOCUS_SCREENSHOTS/messanging1_zabyfn.png">
 
 <img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="https://res.cloudinary.com/mozammalhossain/image/upload/v1639424210/FOCUS_SCREENSHOTS/messanging5_o7fnud.png">
-
-<img width="900" alt="Screenshot 2021-09-16 at 10 34 19 AM" src="https://youtu.be/qxu1bku4wN0?list=RDMMqxu1bku4wN0&t=30">
