@@ -1,4 +1,4 @@
-# [Focus](https://focu-s.herokuapp.com/)
+# [Focus](https://www.focu-s.ml)
 
 ## Introduction
 
@@ -17,7 +17,7 @@ Another important element of our app is messaging. Students and alumni can begin
 - Semantic-UI
 - Cloudinary
 
-## [Deployed Version](https://focu-s.herokuapp.com/)
+## [Deployed Version](https://www.focu-s.ml)
 
 ## Installation
 
