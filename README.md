@@ -47,9 +47,9 @@ nodemon server.js
 
 ## Overall Project Demonstration
 
-Fo better quality click [FOCUS](https://youtu.be/kWAyZxIcgN8)
+<!-- Fo better quality click [FOCUS](https://youtu.be/kWAyZxIcgN8) -->
 
-https://user-images.githubusercontent.com/40220345/145923330-db91e2aa-b98d-4277-8787-880d5edd38a5.mov
+<!-- https://user-images.githubusercontent.com/40220345/145923330-db91e2aa-b98d-4277-8787-880d5edd38a5.mov -->
 
 ## Screenshots
 
