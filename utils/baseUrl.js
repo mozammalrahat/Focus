@@ -1,6 +1,6 @@
 const baseUrl =
   process.env.NODE_ENV !== "production"
-    ? "https://grand-brigadeiros-3c0359.netlify.app"
+    ? "http://localhost:3000"
     : "https://grand-brigadeiros-3c0359.netlify.app";
 
 module.exports = baseUrl;
