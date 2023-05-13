@@ -63,9 +63,9 @@ function SideMenu({
                 </List.Content>
               </List.Item>
             </Link>
-            <br />
+            {/* <br /> */}
 
-            <Link href="/messages">
+            {/* <Link href="/messages">
               <List.Item active={isActive("/messages")}>
                 <Icon
                   name={unreadMessage ? "hand point right" : "mail outline"}
@@ -79,7 +79,7 @@ function SideMenu({
                   {pc && <List.Header content="Messages" />}
                 </List.Content>
               </List.Item>
-            </Link>
+            </Link> */}
             <br />
             <Link href="/qa/notifications">
               <List.Item active={isActive("/notifications")}>
@@ -305,7 +305,7 @@ function SideMenu({
                 </List.Content>
               </List.Item>
             </Link>
-            <br />
+            {/* <br />
             <Link href="/messages">
               <List.Item active={isActive("/messages")}>
                 <Icon
@@ -320,7 +320,7 @@ function SideMenu({
                   {pc && <List.Header content="Messages" />}
                 </List.Content>
               </List.Item>
-            </Link>
+            </Link> */}
             <br />
             <Link href="/studentshub/notifications">
               <List.Item active={isActive("/notifications")}>

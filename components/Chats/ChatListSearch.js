@@ -12,7 +12,7 @@ function ChatListSearch({ chats, setChats }) {
   const [results, setResults] = useState([]);
   const router = useRouter();
 
-  const handleChange = async e => {
+  const handleChange = async (e) => {
     const { value } = e.target;
     setText(value);
     setLoading(true);
@@ -24,25 +24,25 @@ function ChatListSearch({ chats, setChats }) {
 
       const res = await axios.get(`${baseUrl}/api/search/${value}`, {
         headers: { Authorization: token },
-        cancelToken: new CancelToken(canceler => {
+        cancelToken: new CancelToken((canceler) => {
           cancel = canceler;
-        })
+        }),
       });
 
       if (res.data.length === 0) return setLoading(false);
 
       setResults(res.data);
     } catch (error) {
-      alert("Error Searching");
+      // alert("Error Searching");
     }
 
     setLoading(false);
   };
 
-  const addChat = result => {
+  const addChat = (result) => {
     const alreadyInChat =
       chats.length > 0 &&
-      chats.filter(chat => chat.messsagesWith === result._id).length > 0;
+      chats.filter((chat) => chat.messsagesWith === result._id).length > 0;
 
     if (alreadyInChat) {
       return router.push(`/messages?message=${result._id}`);
@@ -54,10 +54,10 @@ function ChatListSearch({ chats, setChats }) {
         name: result.name,
         profilePicUrl: result.profilePicUrl,
         lastMessage: "",
-        date: Date.now()
+        date: Date.now(),
       };
 
-      setChats(prev => [newChat, ...prev]);
+      setChats((prev) => [newChat, ...prev]);
 
       return router.push(`/messages?message=${result._id}`);
     }
